@@ -1,0 +1,227 @@
+[
+  {
+    "animal_type": "鱼类",
+    "symptoms": ["体表出现白色小点", "游泳异常", "频繁擦身", "食欲下降"],
+    "environment": {
+      "temperature": 25.5,
+      "ph": 7.2,
+      "dissolved_oxygen": 6.8,
+      "salinity": 0,
+      "ammonia": 0.2
+    },
+    "diagnosis": "白点病（小瓜虫病）",
+    "treatment": "使用甲基蓝药浴，每日1次，连续3-5天。同时提高水温至28-30℃，加强水体循环。",
+    "confidence": 0.95,
+    "source": "expert"
+  },
+  {
+    "animal_type": "鱼类",
+    "symptoms": ["鳃丝发白", "呼吸困难", "浮头现象", "食欲不振"],
+    "environment": {
+      "temperature": 24.0,
+      "ph": 6.8,
+      "dissolved_oxygen": 4.2,
+      "salinity": 0,
+      "ammonia": 0.8
+    },
+    "diagnosis": "烂鳃病",
+    "treatment": "使用抗生素治疗，如土霉素或氯霉素。改善水质，增加溶氧，降低氨氮浓度。",
+    "confidence": 0.90,
+    "source": "expert"
+  },
+  {
+    "animal_type": "鱼类",
+    "symptoms": ["腹部肿胀", "粪便拖长且呈白色", "食欲减退", "活动缓慢"],
+    "environment": {
+      "temperature": 26.0,
+      "ph": 7.5,
+      "dissolved_oxygen": 7.0,
+      "salinity": 0,
+      "ammonia": 0.1
+    },
+    "diagnosis": "肠炎",
+    "treatment": "停食1-2天，然后投喂易消化的饲料。可使用庆大霉素拌料投喂，连续5-7天。",
+    "confidence": 0.88,
+    "source": "expert"
+  },
+  {
+    "animal_type": "虾类",
+    "symptoms": ["甲壳出现白色斑点", "活力明显下降", "摄食量减少", "死亡率上升"],
+    "environment": {
+      "temperature": 28.0,
+      "ph": 8.1,
+      "dissolved_oxygen": 6.5,
+      "salinity": 25,
+      "ammonia": 0.3
+    },
+    "diagnosis": "白斑综合征病毒病（WSSV）",
+    "treatment": "无特效治疗药物，主要采取预防措施。改善水质，减少应激，使用免疫增强剂。",
+    "confidence": 0.93,
+    "source": "expert"
+  },
+  {
+    "animal_type": "虾类",
+    "symptoms": ["鳃部变黑", "浮头严重", "游泳无力", "大量死亡"],
+    "environment": {
+      "temperature": 30.0,
+      "ph": 7.8,
+      "dissolved_oxygen": 3.5,
+      "salinity": 22,
+      "ammonia": 1.2
+    },
+    "diagnosis": "黑鳃病",
+    "treatment": "立即换水，使用增氧设备。投喂维生素C和免疫多糖，使用二氧化氯消毒。",
+    "confidence": 0.92,
+    "source": "expert"
+  },
+  {
+    "animal_type": "蟹类",
+    "symptoms": ["甲壳软化", "体色发黄", "活动迟缓", "摄食困难"],
+    "environment": {
+      "temperature": 25.0,
+      "ph": 7.9,
+      "dissolved_oxygen": 6.0,
+      "salinity": 28,
+      "ammonia": 0.5
+    },
+    "diagnosis": "软壳病",
+    "treatment": "补充钙质和维生素D3，改善饲料营养。保持水质稳定，避免应激。",
+    "confidence": 0.85,
+    "source": "expert"
+  },
+  {
+    "animal_type": "贝类",
+    "symptoms": ["壳体开合异常", "足部伸缩困难", "分泌粘液增多", "死亡率增加"],
+    "environment": {
+      "temperature": 22.0,
+      "ph": 8.2,
+      "dissolved_oxygen": 7.5,
+      "salinity": 32,
+      "ammonia": 0.1
+    },
+    "diagnosis": "弧菌病",
+    "treatment": "使用氯霉素药浴，浓度为20-30ppm，浸泡2-4小时。改善水质，减少有机物污染。",
+    "confidence": 0.87,
+    "source": "expert"
+  },
+  {
+    "animal_type": "鱼类",
+    "symptoms": ["眼球突出", "腹部膨大", "鳞片松动", "体表充血"],
+    "environment": {
+      "temperature": 23.0,
+      "ph": 7.0,
+      "dissolved_oxygen": 5.8,
+      "salinity": 0,
+      "ammonia": 0.6
+    },
+    "diagnosis": "细菌性败血症",
+    "treatment": "使用广谱抗生素如恩诺沙星或氟苯尼考。同时改善水质，加强消毒。",
+    "confidence": 0.91,
+    "source": "expert"
+  },
+  {
+    "animal_type": "鱼类",
+    "symptoms": ["鳍条腐烂", "鳍膜破损", "游泳平衡失调", "体表有白色絮状物"],
+    "environment": {
+      "temperature": 21.0,
+      "ph": 6.5,
+      "dissolved_oxygen": 5.2,
+      "salinity": 0,
+      "ammonia": 0.9
+    },
+    "diagnosis": "水霉病",
+    "treatment": "使用亚甲基蓝或孔雀石绿药浴。保持水温在25℃以上，改善水质条件。",
+    "confidence": 0.89,
+    "source": "expert"
+  },
+  {
+    "animal_type": "虾类",
+    "symptoms": ["肌肉白浊", "游泳异常", "弹跳力下降", "摄食减少"],
+    "environment": {
+      "temperature": 27.0,
+      "ph": 8.0,
+      "dissolved_oxygen": 6.2,
+      "salinity": 26,
+      "ammonia": 0.4
+    },
+    "diagnosis": "肌肉白浊病",
+    "treatment": "投喂高质量饲料，添加维生素E和硒。减少密度，改善水质。",
+    "confidence": 0.86,
+    "source": "expert"
+  },
+  {
+    "animal_type": "海参",
+    "symptoms": ["体壁溃烂", "自溶现象", "活力下降", "摄食停止"],
+    "environment": {
+      "temperature": 19.0,
+      "ph": 8.3,
+      "dissolved_oxygen": 8.0,
+      "salinity": 30,
+      "ammonia": 0.2
+    },
+    "diagnosis": "腐皮综合征",
+    "treatment": "立即隔离病参，使用聚维酮碘消毒。控制水温，加强水体交换。",
+    "confidence": 0.84,
+    "source": "expert"
+  },
+  {
+    "animal_type": "鲍鱼",
+    "symptoms": ["足部萎缩", "附着力减弱", "壳体变薄", "生长缓慢"],
+    "environment": {
+      "temperature": 20.0,
+      "ph": 8.1,
+      "dissolved_oxygen": 7.8,
+      "salinity": 33,
+      "ammonia": 0.3
+    },
+    "diagnosis": "足部萎缩病",
+    "treatment": "改善饲料质量，增加蛋白质含量。保持水质清洁，定期换水。",
+    "confidence": 0.83,
+    "source": "expert"
+  },
+  {
+    "animal_type": "扇贝",
+    "symptoms": ["闭壳肌无力", "开口时间延长", "分泌物增多", "死亡前狂游"],
+    "environment": {
+      "temperature": 18.0,
+      "ph": 8.4,
+      "dissolved_oxygen": 8.5,
+      "salinity": 34,
+      "ammonia": 0.1
+    },
+    "diagnosis": "扇贝大量死亡综合征",
+    "treatment": "目前无特效治疗方法，主要预防。控制养殖密度，改善环境条件。",
+    "confidence": 0.80,
+    "source": "expert"
+  },
+  {
+    "animal_type": "牡蛎",
+    "symptoms": ["壳体变形", "生长停滞", "肉质萎缩", "死亡率高"],
+    "environment": {
+      "temperature": 24.0,
+      "ph": 7.8,
+      "dissolved_oxygen": 6.8,
+      "salinity": 25,
+      "ammonia": 0.7
+    },
+    "diagnosis": "牡蛎疱疹病毒病",
+    "treatment": "无特效药物，主要预防。选择抗病品种，控制水温和盐度。",
+    "confidence": 0.88,
+    "source": "expert"
+  },
+  {
+    "animal_type": "鱼类",
+    "symptoms": ["体表粘液增多", "皮肤发红", "鳞片脱落", "行为异常"],
+    "environment": {
+      "temperature": 28.0,
+      "ph": 6.2,
+      "dissolved_oxygen": 4.8,
+      "salinity": 0,
+      "ammonia": 1.5
+    },
+    "diagnosis": "应激综合征",
+    "treatment": "立即改善水质，调节pH值和氨氮浓度。减少操作，添加抗应激剂。",
+    "confidence": 0.82,
+    "source": "expert"
+  }
+] 

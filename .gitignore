@@ -1,0 +1,94 @@
+# ==========================
+# 🐍 Python 项目忽略项
+# ==========================
+__pycache__/
+*.pyc
+*.pyd
+*.dll
+.venv/
+venv/
+*.egg-info/
+pip-wheel-metadata/
+
+# ==========================
+# 🌐 Vue 项目忽略项
+# ==========================
+dist/
+node_modules/
+web/package-lock.json
+
+# ==========================
+# 🧰 通用忽略项（Common）
+# ==========================
+.DS_Store
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+log/
+logs/
+*.log.*
+*.db
+*.lock
+tmp/
+cache/
+*.pdf
+
+# ==========================
+# 💻 IDE/编辑器配置文件
+# ==========================
+.vscode/
+.idea/
+*.nogit.*
+
+# ==========================
+# 📦 特定目录和文件（你自定义的）
+# ==========================
+src/data/
+saves/
+saves_dev/
+notebooks/
+graphrag/
+docker/volumes/
+.cursorrules
+
+# ==========================
+# 🤖 模型文件（大文件）
+# ==========================
+/models/
+/models/**/*.bin
+/models/**/*.pt
+/models/**/*.safetensors
+/models/**/*.gguf
+!/models/.gitkeep
+
+# ==========================
+# 📚 依赖库大文件
+# ==========================
+# Torch大文件
+**/torch/lib/*.dll
+**/torch/lib/*.lib
+**/torch/lib/*.so
+**/torch/lib/*.dylib
+
+# Paddle大文件
+**/paddle/libs/*.dll
+**/paddle/base/*.pyd
+**/paddle/libs/*.so
+**/paddle/libs/*.dylib
+
+# OpenCV大文件
+**/cv2/*.pyd
+**/cv2/*.so
+**/cv2/*.dylib
+
+# ==========================
+# 🗃️ 数据文件
+# ==========================
+/data/vector_store/
+/data/knowledge_graph/
+!/data/.gitkeep
+!/data/*/README.md

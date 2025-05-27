@@ -1,0 +1,149 @@
+{
+    "version": "1.0",
+    "updated_at": "2023-05-19",
+    "categories": {
+        "fish_species": {
+            "description": "水生动物种类",
+            "tags": [
+                "鲤鱼", "草鱼", "鲫鱼", "鲢鱼", "鳙鱼", "青鱼", "鳊鱼", "鳜鱼", "黄鳝", 
+                "泥鳅", "虹鳟鱼", "罗非鱼", "黑鱼", "大鲵", "中华鳖", "青蟹", "南美白对虾"
+            ]
+        },
+        "disease_types": {
+            "description": "疾病类型分类",
+            "tags": [
+                "病毒性疾病", "细菌性疾病", "真菌性疾病", "寄生虫病", "营养性疾病", 
+                "环境应激疾病", "中毒性疾病", "遗传性疾病"
+            ]
+        },
+        "body_parts": {
+            "description": "病变部位",
+            "tags": [
+                "鳃部", "鳍部", "鳞片", "表皮", "肌肉", "内脏", "消化道", "肝脏", 
+                "肾脏", "鱼鳔", "眼部", "脑部", "神经系统", "血液", "生殖系统"
+            ]
+        },
+        "symptoms": {
+            "description": "症状表现",
+            "tags": [
+                "鳃部发白", "鳃丝烂损", "鳍条糜烂", "鳞片脱落", "体表发红", "体表出血", 
+                "体表溃疡", "眼部突出", "眼混浊", "腹部膨胀", "体色异常", "行为异常", 
+                "游动异常", "摄食减少", "不摄食", "躁动不安", "嗜睡", "体表黏液增多", 
+                "呼吸急促", "水面游动", "体重减轻", "生长迟缓", "死亡率升高"
+            ]
+        },
+        "diseases": {
+            "description": "常见疾病",
+            "subcategories": {
+                "viral_diseases": {
+                    "description": "病毒性疾病",
+                    "tags": [
+                        "草鱼出血病", "鲤春病毒血症", "鲫造血器官坏死病", "锦鲤疱疹病毒病", 
+                        "虹鳟病毒性出血性败血症", "鲤鱼疱疹病毒病", "鲤鱼水泡病"
+                    ]
+                },
+                "bacterial_diseases": {
+                    "description": "细菌性疾病",
+                    "tags": [
+                        "烂鳃病", "赤皮病", "水肿病", "烂尾病", "肠炎病", "败血症", 
+                        "柱状黄杆菌病", "车轮虫病", "爱德华氏菌病", "链球菌病", "气单胞菌病"
+                    ]
+                },
+                "fungal_diseases": {
+                    "description": "真菌性疾病",
+                    "tags": [
+                        "水霉病", "鳃霉病", "分枝菌病", "鱼苗壶菌病", "黄曲霉毒素中毒"
+                    ]
+                },
+                "parasitic_diseases": {
+                    "description": "寄生虫病",
+                    "tags": [
+                        "指环虫病", "三代虫病", "车轮虫病", "小瓜虫病", "鱼虱病", 
+                        "锚头蚤病", "钩体虫病", "斜管虫病", "吸虫病", "绦虫病"
+                    ]
+                }
+            }
+        },
+        "treatments": {
+            "description": "治疗方法",
+            "tags": [
+                "药浴", "拌饵投喂", "浸泡", "注射", "泼洒", "全池用药", "隔离治疗"
+            ]
+        },
+        "medications": {
+            "description": "常用药物",
+            "tags": [
+                "高锰酸钾", "二氧化氯", "漂白粉", "食盐", "硫酸铜", "硫酸亚铁", 
+                "敌百虫", "福尔马林", "孔雀石绿", "土霉素", "金霉素", "氯霉素", 
+                "恩诺沙星", "甲硝唑", "阿维菌素", "氟苯尼考", "三甲基氯化铵"
+            ]
+        },
+        "prevention": {
+            "description": "预防措施",
+            "tags": [
+                "水质管理", "水温控制", "pH值调节", "溶氧量管理", "饲料质量控制", 
+                "消毒措施", "疫苗接种", "种群密度控制", "定期检查", "隔离新引入个体"
+            ]
+        },
+        "environmental_factors": {
+            "description": "环境因素",
+            "tags": [
+                "水温过高", "水温过低", "水温骤变", "溶氧不足", "氨氮超标", 
+                "亚硝酸盐超标", "pH值异常", "有机物污染", "重金属污染", "农药污染"
+            ]
+        },
+        "seasons": {
+            "description": "季节流行性",
+            "tags": [
+                "春季", "夏季", "秋季", "冬季", "四季", "水温升高期", "水温下降期"
+            ]
+        }
+    },
+    "relations": [
+        {
+            "name": "disease_symptom",
+            "description": "疾病-症状关系",
+            "source": "diseases",
+            "target": "symptoms"
+        },
+        {
+            "name": "disease_treatment",
+            "description": "疾病-治疗方法关系",
+            "source": "diseases",
+            "target": "treatments"
+        },
+        {
+            "name": "disease_species",
+            "description": "疾病-易感种类关系",
+            "source": "diseases",
+            "target": "fish_species"
+        },
+        {
+            "name": "disease_season",
+            "description": "疾病-季节关系",
+            "source": "diseases",
+            "target": "seasons"
+        },
+        {
+            "name": "disease_medication",
+            "description": "疾病-用药关系",
+            "source": "diseases",
+            "target": "medications"
+        }
+    ],
+    "disease_templates": {
+        "name": "",
+        "type": "",
+        "pathogen": "",
+        "symptoms": [],
+        "affected_species": [],
+        "body_parts": [],
+        "seasons": [],
+        "environmental_factors": [],
+        "diagnosis_methods": [],
+        "treatments": [],
+        "medications": [],
+        "prevention": [],
+        "notes": ""
+    }
+}

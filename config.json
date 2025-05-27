@@ -1,0 +1,182 @@
+{
+  "model_provider": "custom",
+  "model_name": "OceanGPT-o-7B-v0.1",
+  "embed_model": "BAAI/bge-large-zh-v1.5",
+  "reranker": "BAAI/bge-reranker-large",
+  "enable_knowledge_base": true,
+  "enable_knowledge_graph": true,
+  "enable_web_search": false,
+  "enable_reranker": true,
+  "use_rewrite_query": "auto",
+  
+  "model_local_paths": {
+    "BAAI/bge-large-zh-v1.5": "./models/bge-large-zh-v1.5",
+    "OceanGPT-o-7B-v0.1": "./models/OceanGPT-o-7B-v0.1",
+    "OceanGPT-coder-7B-v0.1": "./models/OceanGPT-coder-7B-v0.1",
+    "OceanGPT-basic-v0.3": "./models/OceanGPT-basic-v0.3",
+    "BAAI/bge-reranker-large": "./models/bge-reranker-large"
+  },
+  
+  "oceangpt_models": {
+    "OceanGPT-o-7B-v0.1": {
+      "name": "OceanGPT-o-7B-v0.1",
+      "description": "多模态海洋领域大模型，支持图像和文本理解",
+      "base_model": "Qwen2.5-VL-7B-Instruct",
+      "supports_multimodal": true,
+      "supports_code": false,
+      "modelscope_id": "ZJUNLP/OceanGPT-o-7B",
+      "huggingface_id": "zjunlp/OceanGPT-o-7B",
+      "recommended": true
+    },
+    "OceanGPT-coder-7B-v0.1": {
+      "name": "OceanGPT-coder-7B-v0.1",
+      "description": "海洋领域代码生成专用模型",
+      "base_model": "Qwen2.5-Coder-7B-Instruct",
+      "supports_multimodal": false,
+      "supports_code": true,
+      "modelscope_id": "ZJUNLP/OceanGPT-coder-7B",
+      "huggingface_id": "zjunlp/OceanGPT-coder-7B",
+      "recommended": false
+    },
+    "OceanGPT-basic-v0.3": {
+      "name": "OceanGPT-basic-v0.3",
+      "description": "知识增强的海洋领域基础模型",
+      "base_model": "Qwen",
+      "supports_multimodal": false,
+      "supports_code": false,
+      "modelscope_id": "ZJUNLP/OceanGPT-basic-v0.3",
+      "huggingface_id": "zjunlp/OceanGPT-basic-v0.3",
+      "recommended": false
+    }
+  },
+  
+  "ocean_instruct_datasets": {
+    "OceanInstruct-v0.2": {
+      "name": "OceanInstruct-v0.2",
+      "description": "50K中英双语海洋领域文本指令数据",
+      "size": "50K",
+      "type": "text",
+      "modelscope_id": "zjunlp/OceanInstruct-v0.2",
+      "huggingface_id": "zjunlp/OceanInstruct-v0.2"
+    },
+    "OceanInstruct-o": {
+      "name": "OceanInstruct-o",
+      "description": "50K中英双语海洋领域多模态指令数据",
+      "size": "50K",
+      "type": "multimodal",
+      "modelscope_id": "zjunlp/OceanInstruct-o",
+      "huggingface_id": "zjunlp/OceanInstruct-o"
+    },
+    "OceanInstruct-v0.1": {
+      "name": "OceanInstruct-v0.1",
+      "description": "10K中英双语海洋领域文本指令数据（早期版本）",
+      "size": "10K",
+      "type": "text",
+      "modelscope_id": "zjunlp/OceanInstruct-v0.1",
+      "huggingface_id": "zjunlp/OceanInstruct-v0.1"
+    }
+  },
+  
+  "model_download": {
+    "preferred_source": "modelscope",
+    "fallback_source": "huggingface",
+    "auto_download": true,
+    "verify_integrity": true,
+    "cache_dir": "./models",
+    "datasets_cache_dir": "./datasets/ocean_instruct"
+  },
+  
+  "custom_models": [
+    {
+      "custom_id": "oceangpt-o-7b",
+      "name": "OceanGPT-o-7B 多模态海洋专用大模型",
+      "api_base": "http://localhost:8000",
+      "api_key": "",
+      "max_tokens": 2048,
+      "temperature": 0.7,
+      "supports_multimodal": true
+    },
+    {
+      "custom_id": "oceangpt-coder-7b",
+      "name": "OceanGPT-coder-7B 海洋代码生成模型",
+      "api_base": "http://localhost:8001",
+      "api_key": "",
+      "max_tokens": 2048,
+      "temperature": 0.3,
+      "supports_code": true
+    }
+  ],
+  
+  "rag_config": {
+    "top_k": 5,
+    "score_threshold": 0.7,
+    "max_tokens": 512,
+    "enable_rerank": true,
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "hybrid_search": true,
+    "alpha": 0.7
+  },
+  
+  "vector_store": {
+    "type": "faiss",
+    "dimension": 1024,
+    "index_type": "IVFFlat",
+    "nlist": 100,
+    "nprobe": 10,
+    "index_path": "./data/vector_store/faiss_index",
+    "metadata_path": "./data/vector_store/metadata"
+  },
+  
+  "knowledge_graph": {
+    "neo4j_uri": "bolt://localhost:7687",
+    "neo4j_username": "neo4j",
+    "neo4j_password": "password",
+    "batch_size": 1000,
+    "enable_apoc": true
+  },
+  
+  "data_sources": {
+    "marine_diseases": "./datasets/marine_diseases/",
+    "treatment_protocols": "./datasets/treatments/",
+    "water_quality": "./datasets/water_quality/",
+    "case_studies": "./datasets/case_studies/",
+    "ocean_instruct": "./datasets/ocean_instruct/"
+  },
+  
+  "fine_tuning": {
+    "lora_r": 64,
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "target_modules_text": ["q_proj", "v_proj", "k_proj", "o_proj"],
+    "target_modules_multimodal": ["q_proj", "v_proj", "k_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    "learning_rate": 1e-4,
+    "num_epochs": 3,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "use_ocean_instruct": true,
+    "auto_download_datasets": true
+  },
+  
+  "multimodal": {
+    "enable_vision": true,
+    "supported_formats": ["jpg", "jpeg", "png", "bmp", "gif"],
+    "max_image_size": "10MB",
+    "image_preprocessing": {
+      "resize": true,
+      "max_width": 1024,
+      "max_height": 1024,
+      "quality": 85
+    }
+  },
+  
+  "system": {
+    "log_level": "INFO",
+    "max_concurrent_requests": 10,
+    "cache_ttl": 3600,
+    "enable_metrics": true,
+    "cors_origins": ["http://localhost:5173", "http://localhost:3000"],
+    "gpu_memory_fraction": 0.8,
+    "enable_auto_download": true
+  }
+} 
