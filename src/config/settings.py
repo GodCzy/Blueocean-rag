@@ -39,6 +39,8 @@ class Settings(BaseSettings):
     allowed_origins: List[str] = Field(default=["*"])
     api_prefix: str = "/api"
     admin_prefix: str = "/admin"
+    # 简单API密钥，用于认证
+    api_key: str = Field(default="", env="API_KEY")
     
     # 模型配置
     llm_model_name: str = Field(default="internlm/internlm2-chat-7b")

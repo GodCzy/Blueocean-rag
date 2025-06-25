@@ -41,6 +41,8 @@ from src.routers.chat_router import router as chat_router
 from src.routers.data_router import router as data_router
 from src.routers.tool_router import router as tool_router
 from src.routers.training import router as training_router
+from src.routers.stats import router as stats_router
+from src.auth import api_key_auth
 
 # 配置日志
 logger = setup_logger("main")
@@ -258,6 +260,12 @@ def create_app(settings: Settings = Depends(get_settings)) -> FastAPI:
         training_router,
         prefix=f"{settings.api_prefix}/training",
         tags=["训练服务"]
+    )
+
+    app.include_router(
+        stats_router,
+        prefix=f"{settings.api_prefix}",
+        tags=["统计"]
     )
     
     # 尝试创建静态目录

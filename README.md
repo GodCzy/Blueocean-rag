@@ -205,6 +205,11 @@ curl -X POST "http://localhost:8000/api/v1/rag/search" \
   -d '{"query": "鱼类白点病治疗方法", "top_k": 5}'
 ```
 
+# 统计API
+```bash
+curl -H "X-API-Key: <your key>" http://localhost:8000/api/stats/diagnosis
+```
+
 ## 📖 详细文档
 
 ### 📝 API文档
