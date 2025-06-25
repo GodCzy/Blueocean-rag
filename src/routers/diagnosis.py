@@ -34,11 +34,17 @@ class SymptomInput(BaseModel):
     environment_info: Optional[Dict[str, Any]] = None
     severity: Optional[str] = "中等"
 
+class WaterParameters(BaseModel):
+    temperature: Optional[float] = Field(None, ge=-10, le=40)
+    ph: Optional[float] = Field(None, ge=0, le=14)
+    dissolved_oxygen: Optional[float] = Field(None, ge=0)
+
+
 class DiagnosisRequest(BaseModel):
     animal_type: str
     symptoms: List[str]
     environment_info: Optional[Dict[str, Any]] = None
-    water_parameters: Optional[Dict[str, Any]] = None
+    water_parameters: Optional[WaterParameters] = None
     use_knowledge_graph: bool = True
     use_rag: bool = True
 
@@ -125,7 +131,11 @@ async def diagnose_disease(
         # 4. 水质环境分析
         environment_analysis = None
         if request.water_parameters:
-            environment_analysis = await gpt.analyze_environment(request.water_parameters)
+            from ..core.water_analysis import analyze_water_quality
+            params = request.water_parameters
+            environment_analysis = analyze_water_quality(
+                params.temperature, params.ph, params.dissolved_oxygen
+            )
             results["environment_analysis"] = environment_analysis
         
         # 5. 整合结果
@@ -166,6 +176,8 @@ async def diagnose_disease(
                 "for_disease": top_disease.get("disease_name")
             })
         
+        from .stats import increment_diagnosis
+        increment_diagnosis()
         return DiagnosisResult(
             disease_candidates=disease_candidates,
             confidence_scores=confidence_scores,
