@@ -6,9 +6,11 @@ import shutil
 
 from pymilvus import MilvusClient, MilvusException
 
-from src import config
+from src import get_config
 from src.utils import logger, hashstr
 from src.core.indexing import chunk, read_text
+
+config = get_config()
 
 
 

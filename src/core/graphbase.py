@@ -6,8 +6,10 @@ import traceback
 import torch
 from neo4j import GraphDatabase as GD
 
-from src import config
+from src import get_config
 from src.utils import logger
+
+config = get_config()
 
 warnings.filterwarnings("ignore", category=UserWarning)
 

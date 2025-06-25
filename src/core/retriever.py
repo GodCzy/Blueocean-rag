@@ -1,7 +1,11 @@
-from src import config, knowledge_base, graph_base
+from src import get_config, get_knowledge_base, get_graph_base
 from src.models.rerank_model import get_reranker
 from src.utils.logging_config import logger
 from src.models import select_model
+
+config = get_config()
+knowledge_base = get_knowledge_base()
+graph_base = get_graph_base()
 
 class Retriever:
 

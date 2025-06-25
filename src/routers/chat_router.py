@@ -4,7 +4,11 @@ import traceback
 from fastapi import APIRouter, Body
 from fastapi.responses import StreamingResponse, Response
 from src.core import HistoryManager
-from src import executor, config, retriever
+from src import get_executor, get_config, get_retriever
+
+executor = get_executor()
+config = get_config()
+retriever = get_retriever()
 from src.models import select_model
 from src.utils.logging_config import logger
 
