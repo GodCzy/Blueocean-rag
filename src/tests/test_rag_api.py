@@ -1,5 +1,6 @@
 """
 RAG API单元测试
+详见 docs/api.md
 """
 import unittest
 import os

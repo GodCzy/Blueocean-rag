@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from src.auth import api_key_auth
+
+# 简单认证测试
 from src.routers.stats import router as stats_router
 
 class TestAuth(unittest.TestCase):

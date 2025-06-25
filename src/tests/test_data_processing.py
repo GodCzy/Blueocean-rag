@@ -4,6 +4,8 @@
 test_data_processing.py - 数据解析和标记功能测试
 
 作者: 团队成员
+
+依赖 datasets 目录下的样本数据
 """
 
 import os

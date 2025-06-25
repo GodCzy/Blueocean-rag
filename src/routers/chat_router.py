@@ -3,6 +3,8 @@ import asyncio
 import traceback
 from fastapi import APIRouter, Body
 from fastapi.responses import StreamingResponse, Response
+
+# 聊天相关接口
 from src.core import HistoryManager
 from src import get_executor, get_config, get_retriever
 

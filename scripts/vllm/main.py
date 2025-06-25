@@ -1,5 +1,7 @@
 from vllm import LLM, SamplingParams
 
+# VLLM 示例脚本
+
 llm = LLM(model="/hdd/zwj/models/meta-llama/Meta-Llama-3-8B-Instruct")
 
 

@@ -1,5 +1,7 @@
 """Package bootstrap utilities.
 
+Minor edits for code cleanup.
+
 This module used to eagerly create global objects when imported which could
 lead to slow start-up and unnecessary resource usage.  The initialization is
 now done lazily via accessor functions.  Modules should use the provided

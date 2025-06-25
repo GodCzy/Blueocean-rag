@@ -1,6 +1,7 @@
 @echo off
 chcp 65001 >nul
 title 蓝海智询 - 启动脚本
+rem 启动前请按照 DEPLOYMENT_GUIDE.md 完成环境配置
 
 echo.
 echo ===================================================

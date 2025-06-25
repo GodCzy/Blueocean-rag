@@ -1,4 +1,5 @@
 MODEL=Meta-Llama-3-8B-Instruct
+# vLLM 启动脚本示例
 
 if [ -z "$1" ]; then
     echo "Error: No argument provided. Please specify a model name."

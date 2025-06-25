@@ -3,6 +3,8 @@ from fastapi import APIRouter, Body
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 
+# 工具相关路由，后续可扩展更多接口
+
 from src.utils import logger
 
 tool = APIRouter(prefix="/tool")

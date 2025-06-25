@@ -1,5 +1,7 @@
 """
 运行所有测试的脚本
+
+确保在虚拟环境中执行
 """
 import unittest
 import os

@@ -2,6 +2,8 @@
 """
 OceanGPT模型管理脚本
 用于下载、切换和管理不同版本的OceanGPT模型
+
+ 更多使用说明见 DEPLOYMENT_GUIDE.md。
 """
 
 import argparse

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """
 监控OceanGPT模型下载进度
+
+ 与 `manage_oceangpt.py` 脚本配合使用。
 """
 
 import os

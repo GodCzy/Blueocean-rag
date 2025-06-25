@@ -1,5 +1,7 @@
 # API 文档
 
+> 仅展示常用接口，更全面的说明请查看项目根目录的 `README.md`。
+
 ## 诊断统计
 - **URL**: `/api/stats/diagnosis`
 - **方法**: `GET`

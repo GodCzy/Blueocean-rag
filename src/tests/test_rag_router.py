@@ -1,5 +1,6 @@
 """
 RAG Router单元测试
+相关接口说明见 docs/api.md
 """
 import unittest
 from unittest.mock import patch, MagicMock, AsyncMock

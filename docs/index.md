@@ -6,6 +6,8 @@ description: "语析是一个强大的问答平台，结合了大模型 RAG 知�
 permalink: /
 ---
 
+> 文档仅包含核心说明，完整部署步骤请查阅项目根目录的 `DEPLOYMENT_GUIDE.md`。
+
 # 语析 - 基于大模型的知识库与知识图谱问答系统
 
 <div align="center">
