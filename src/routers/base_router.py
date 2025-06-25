@@ -4,7 +4,17 @@ from fastapi import Request, Body
 
 base = APIRouter()
 
-from src import config, retriever, knowledge_base, graph_base
+from src import (
+    get_config,
+    get_retriever,
+    get_knowledge_base,
+    get_graph_base,
+)
+
+config = get_config()
+retriever = get_retriever()
+knowledge_base = get_knowledge_base()
+graph_base = get_graph_base()
 from src.utils import logger
 
 

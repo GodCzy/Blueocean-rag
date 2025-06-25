@@ -4,9 +4,11 @@ import requests
 from FlagEmbedding import FlagModel
 from zhipuai import ZhipuAI
 
-from src import config
+from src import get_config
 from src.config import EMBED_MODEL_INFO
 from src.utils import hashstr, logger, get_docker_safe_url
+
+config = get_config()
 
 
 class BaseEmbeddingModel:
