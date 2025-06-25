@@ -208,7 +208,7 @@ class RAGService:
                 "has_oceangpt": False,
             }
     
-    def diagnose(self, symptoms: List[str], species: Optional[str] = None) -> Dict[str, Any]:
+    async def diagnose(self, symptoms: List[str], species: Optional[str] = None) -> Dict[str, Any]:
         """
         根据症状进行疾病诊断
         
@@ -231,7 +231,7 @@ class RAGService:
             query += f"出现以下症状: {', '.join(symptoms)}。这可能是什么疾病？给出详细诊断和处理建议。"
             
             # 使用RAG执行诊断
-            result = self.ask(query, response_mode="tree_summarize")
+            result = await self.ask(query, response_mode="tree_summarize")
             
             # 添加诊断特定字段
             result["symptoms"] = symptoms
