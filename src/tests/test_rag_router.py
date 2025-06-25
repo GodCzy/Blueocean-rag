@@ -2,7 +2,7 @@
 RAG Router单元测试
 """
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, AsyncMock
 from fastapi.testclient import TestClient
 from fastapi import FastAPI
 
@@ -25,11 +25,11 @@ class TestRAGRouter(unittest.TestCase):
         """测试问答接口"""
         # 模拟RAG服务返回值
         mock_rag_service = MagicMock(spec=RAGService)
-        mock_rag_service.ask.return_value = {
+        mock_rag_service.ask = AsyncMock(return_value={
             "answer": "鲤鱼的常见病包括烂鳃病、肠炎和水霉病。",
             "source_documents": ["测试文档内容"],
             "elapsed_time": 0.5
-        }
+        })
         mock_get_rag.return_value = mock_rag_service
         
         # 发送请求
@@ -48,8 +48,8 @@ class TestRAGRouter(unittest.TestCase):
         self.assertEqual(data["answer"], "鲤鱼的常见病包括烂鳃病、肠炎和水霉病。")
         
         # 验证服务调用
-        mock_rag_service.ask.assert_called_once_with(
-            "鲤鱼有哪些常见病？", 
+        mock_rag_service.ask.assert_awaited_once_with(
+            "鲤鱼有哪些常见病？",
             "compact"
         )
     
@@ -58,14 +58,14 @@ class TestRAGRouter(unittest.TestCase):
         """测试诊断接口"""
         # 模拟RAG服务返回值
         mock_rag_service = MagicMock(spec=RAGService)
-        mock_rag_service.diagnose.return_value = {
+        mock_rag_service.diagnose = AsyncMock(return_value={
             "answer": "根据症状判断，这可能是烂鳃病。建议使用高锰酸钾溶液进行消毒。",
             "source_documents": ["测试文档内容"],
             "symptoms": ["鳃部发白", "活动减少"],
             "species": "鲤鱼",
             "elapsed_time": 0.5,
             "diagnosis_time": 0.3
-        }
+        })
         mock_get_rag.return_value = mock_rag_service
         
         # 发送请求
@@ -86,8 +86,8 @@ class TestRAGRouter(unittest.TestCase):
         self.assertEqual(data["species"], "鲤鱼")
         
         # 验证服务调用
-        mock_rag_service.diagnose.assert_called_once_with(
-            ["鳃部发白", "活动减少"], 
+        mock_rag_service.diagnose.assert_awaited_once_with(
+            ["鳃部发白", "活动减少"],
             "鲤鱼"
         )
     
@@ -119,7 +119,7 @@ class TestRAGRouter(unittest.TestCase):
         """测试错误处理"""
         # 模拟服务抛出异常
         mock_rag_service = MagicMock(spec=RAGService)
-        mock_rag_service.ask.side_effect = Exception("测试异常")
+        mock_rag_service.ask = AsyncMock(side_effect=Exception("测试异常"))
         mock_get_rag.return_value = mock_rag_service
         
         # 发送请求

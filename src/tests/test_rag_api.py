@@ -5,6 +5,7 @@ import unittest
 import os
 import shutil
 import tempfile
+import asyncio
 from unittest.mock import patch, MagicMock
 
 from src.api.rag_api import RAGService, get_rag_service
@@ -82,7 +83,7 @@ class TestRAGService(unittest.TestCase):
         )
         
         # 执行问答
-        result = rag_service.ask("鲤鱼有哪些常见病？")
+        result = asyncio.run(rag_service.ask("鲤鱼有哪些常见病？"))
         
         # 验证结果
         self.assertIn("answer", result)
@@ -116,7 +117,7 @@ class TestRAGService(unittest.TestCase):
         # 执行诊断
         symptoms = ["鳃部发白", "活动减少"]
         species = "鲤鱼"
-        result = rag_service.diagnose(symptoms, species)
+        result = asyncio.run(rag_service.diagnose(symptoms, species))
         
         # 验证结果
         self.assertIn("answer", result)

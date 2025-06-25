@@ -67,7 +67,7 @@ async def ask(
     """
     try:
         logger.info(f"Processing question: {request.query}")
-        result = rag_service.ask(request.query, request.response_mode)
+        result = await rag_service.ask(request.query, request.response_mode)
         return result
     except Exception as e:
         logger.error(f"Error in ask endpoint: {str(e)}")
@@ -89,7 +89,7 @@ async def diagnose(
     """
     try:
         logger.info(f"Processing diagnosis for symptoms: {request.symptoms}, species: {request.species}")
-        result = rag_service.diagnose(request.symptoms, request.species)
+        result = await rag_service.diagnose(request.symptoms, request.species)
         return result
     except Exception as e:
         logger.error(f"Error in diagnose endpoint: {str(e)}")
