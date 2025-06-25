@@ -6,6 +6,8 @@ parse_fish_data.py - 解析水生动物疾病文档
 该脚本用于处理水生动物疾病文本文档，提取结构化信息，
 并进行实体识别、文本切块等预处理工作。
 
+ 使用前请确保 `datasets` 目录已准备好原始文档。
+
 用法:
     python parse_fish_data.py --input_dir datasets/fish_docs --output_dir datasets/processed --chunk_size 512
 

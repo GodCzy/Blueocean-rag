@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings
+
+# 临时入口脚本，用于快速试验
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 from src.core.oceangpt_manager import OceanGPTManager, ModelConfig

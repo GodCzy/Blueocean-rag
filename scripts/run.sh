@@ -1,4 +1,5 @@
 #!/bin/bash
+# 基础启动脚本，可根据需要修改
 
 # Function to stop the services
 stop_services() {

@@ -1,4 +1,5 @@
 #!/bin/bash
+# Docker 部署辅助脚本
 
 # 检查是否提供了命令行参数
 if [ $# -eq 0 ]; then

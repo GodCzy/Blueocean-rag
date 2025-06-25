@@ -1,4 +1,5 @@
 from openai import OpenAI
+# 简单的 vLLM 测试脚本
 # Set OpenAI's API key and API base to use vLLM's API server.
 openai_api_key = "EMPTY"
 openai_api_base = "http://localhost:8080/v1"

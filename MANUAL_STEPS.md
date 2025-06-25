@@ -1,5 +1,7 @@
 # 🌊 蓝海智询 - 手动操作步骤清单
 
+> 本文件仅列出最简流程，完整说明请查看 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)。
+
 ## 📋 必需操作步骤
 
 ### 1. 环境准备

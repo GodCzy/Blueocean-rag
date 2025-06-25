@@ -32,6 +32,8 @@
    ```
    默认服务地址为 `http://localhost:8000`，可通过 `http://localhost:8000/docs` 查看接口文档。
 
+更多部署与手动操作说明请参见 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) 与 [MANUAL_STEPS.md](MANUAL_STEPS.md)。
+
 ## 目录结构概览
 
 ```
