@@ -1,0 +1,217 @@
+@import './base.css';
+
+:root {
+  /* 主题色变量 */
+  --primary-50: #e6f7ff;
+  --primary-100: #bae7ff;
+  --primary-200: #91d5ff;
+  --primary-300: #69c0ff;
+  --primary-400: #40a9ff;
+  --primary-500: #1890ff;
+  --primary-600: #096dd9;
+  --primary-700: #0050b3;
+  --primary-800: #003a8c;
+  --primary-900: #002766;
+  
+  /* 灰度色变量 */
+  --gray-10: #fafafa;
+  --gray-50: #f5f5f5;
+  --gray-100: #f0f0f0;
+  --gray-200: #d9d9d9;
+  --gray-300: #bfbfbf;
+  --gray-400: #8c8c8c;
+  --gray-500: #595959;
+  --gray-600: #434343;
+  --gray-700: #262626;
+  --gray-800: #141414;
+  --gray-900: #000000;
+  
+  /* 功能色变量 */
+  --success-color: #52c41a;
+  --warning-color: #faad14;
+  --error-color: #f5222d;
+  --info-color: #1890ff;
+  
+  /* 边框色变量 */
+  --border-color-base: #d9d9d9;
+  --border-color-split: #f0f0f0;
+  
+  /* 主要背景色 */
+  --background-color-base: #f5f5f5;
+  --background-color-light: #fafafa;
+  --background-color-global: #f0f2f5;
+  
+  /* 交互变量 */
+  --hover-color: rgba(0, 0, 0, 0.03);
+  --active-color: rgba(0, 0, 0, 0.06);
+  
+  /* 字体变量 */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  
+  /* 布局变量 */
+  --main-width: 1200px;
+  --main-light-1: rgba(0, 0, 0, 0.02);
+  --main-light-2: rgba(0, 0, 0, 0.04);
+  --main-light-3: rgba(0, 0, 0, 0.06);
+  --main-light-4: rgba(0, 0, 0, 0.08);
+  --main-light-5: rgba(0, 0, 0, 0.1);
+  --main-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  
+  /* 其他变量 */
+  --main-color: var(--primary-500);
+  --header-height: 64px;
+  --min-mobile-width: 320px;
+}
+
+body {
+  background-color: var(--background-color-global);
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: var(--font-size-md);
+  line-height: 1.5715;
+  color: var(--gray-700);
+}
+
+/* 适配移动端的布局 */
+@media (max-width: 768px) {
+  .layout-container {
+    padding: 0 12px;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .layout-container {
+    padding: 0 8px;
+  }
+  
+  html, body {
+    min-width: var(--min-mobile-width);
+    overflow-x: auto;
+  }
+}
+
+@media (min-width: 769px) {
+  .layout-container {
+    padding: 0 20px;
+  }
+}
+
+/* 通用样式 */
+.layout-container {
+  max-width: var(--main-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+}
+
+/* 改进的滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* 移动端滚动条优化 */
+@media (max-width: 520px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+#app {
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 0;
+  font-weight: normal;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1200px) {
+  .layout-container {
+    max-width: 100%;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-600);
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--primary-400);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.17em;
+}
+
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.83em;
+}
+
+h6 {
+  font-size: 0.67em;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
