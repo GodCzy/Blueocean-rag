@@ -42,8 +42,7 @@ def get_knowledge_base():
     """Return the global knowledge base instance."""
     global _knowledge_base
     if _knowledge_base is None:
-        from src.core import KnowledgeBase
-
+        from src.core.knowledgebase import KnowledgeBase
         _knowledge_base = KnowledgeBase()
     return _knowledge_base
 
@@ -52,8 +51,7 @@ def get_graph_base():
     """Return the global graph database instance."""
     global _graph_base
     if _graph_base is None:
-        from src.core import GraphDatabase
-
+        from src.core.graphbase import GraphDatabase
         _graph_base = GraphDatabase()
     return _graph_base
 
