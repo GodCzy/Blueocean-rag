@@ -16,19 +16,19 @@ import subprocess
 import argparse
 import webbrowser
 import time
-import uvicorn
-from pathlib import Path
+import importlib
 
 def check_dependencies():
     """检查项目依赖是否已安装"""
-    try:
-        import fastapi
-        import uvicorn
-        return True
-    except ImportError:
+    missing = []
+    for pkg in ("fastapi", "uvicorn"):
+        if importlib.util.find_spec(pkg) is None:
+            missing.append(pkg)
+    if missing:
         print("未检测到必要的依赖，正在安装...")
         subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
         return False
+    return True
 
 def setup_environment():
     """设置环境变量"""
@@ -40,8 +40,9 @@ def run_api_server(host="127.0.0.1", port=8000, reload=True):
     print(f"启动API服务器：http://{host}:{port}")
     print("API文档：http://{host}:{port}/docs")
     print("退出服务器请按 Ctrl+C")
-    
+
     # 使用uvicorn启动服务
+    import uvicorn
     uvicorn.run(
         "src.main:app",
         host=host,
