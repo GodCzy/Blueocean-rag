@@ -21,7 +21,13 @@ logger = logging.getLogger(__name__)
 
 class ProjectSetup:
     def __init__(self, project_root: str = None):
-        self.project_root = Path(project_root or os.getcwd())
+        """初始化项目设置工具.
+
+        Args:
+            project_root: 项目根目录。如果未指定，则根据脚本位置推断。
+        """
+        default_root = Path(__file__).resolve().parents[2]
+        self.project_root = Path(project_root or default_root)
         self.models_dir = self.project_root / "models"
         self.data_dir = self.project_root / "data"
         self.datasets_dir = self.project_root / "datasets"
