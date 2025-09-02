@@ -23,7 +23,7 @@ class QuickStartManager:
     """快速启动管理器"""
     
     def __init__(self):
-        self.project_root = Path(__file__).parent
+        self.project_root = Path(__file__).resolve().parents[2]
         self.errors = []
         self.warnings = []
         

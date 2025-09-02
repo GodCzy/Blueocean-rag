@@ -2,12 +2,14 @@
 """
 监控OceanGPT模型下载进度
 
- 与 `manage_oceangpt.py` 脚本配合使用。
+ 与 `scripts/model/manage.py` 脚本配合使用。
 """
 
 import os
 import time
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
 
 def format_file_size(size_bytes):
     """格式化文件大小"""
@@ -24,7 +26,7 @@ def format_file_size(size_bytes):
 
 def monitor_download_progress():
     """监控下载进度"""
-    model_path = Path("./models/OceanGPT-o-7B-v0.1/ZJUNLP/OceanGPT-o-7B")
+    model_path = REPO_ROOT / "models/OceanGPT-o-7B-v0.1/ZJUNLP/OceanGPT-o-7B"
     
     if not model_path.exists():
         print("❌ 模型目录不存在")

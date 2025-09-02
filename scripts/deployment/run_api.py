@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-run.py - 蓝海智询启动脚本
+run_api.py - 蓝海智询启动脚本
 
 该脚本用于启动蓝海智询平台的后端服务。
 
@@ -17,6 +17,10 @@ import argparse
 import webbrowser
 import time
 import importlib
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.append(str(REPO_ROOT))
 
 def check_dependencies():
     """检查项目依赖是否已安装"""
@@ -26,7 +30,7 @@ def check_dependencies():
             missing.append(pkg)
     if missing:
         print("未检测到必要的依赖，正在安装...")
-        subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+        subprocess.run([sys.executable, "-m", "pip", "install", "-r", str(REPO_ROOT / "requirements.txt")])
         return False
     return True
 
