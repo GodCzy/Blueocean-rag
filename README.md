@@ -1,6 +1,6 @@
 # 蓝海智询
 
-基于大模型 RAG 检索增强与知识图谱技术的水生动物疾病问答平台。本仓库包含后端服务、示例数据和相关脚本，旨在为水产养殖从业者提供疾病诊断、治疗建议以及海洋环境分析能力。
+基于大模型 RAG 检索增强与知识图谱技术的水生动物疾病问答平台。本仓库包含 FastAPI 后端、OceanGPT 模型管理脚本、示例前端以及初始化脚本，旨在为水产养殖从业者提供疾病诊断、治疗建议与海洋环境分析能力。
 
 ## 主要特性
 
@@ -8,56 +8,86 @@
 - **知识图谱推理**：使用 Neo4j 构建疾病–症状–治疗关系网络，支持基于图谱的诊断。
 - **OceanGPT 模型**：针对海洋场景微调的大语言模型，支持 LoRA 与量化加载。
 - **多模态诊断**：可接收文本描述与环境参数，生成个性化治疗方案。
-- **完整 API**：基于 FastAPI 提供问答、诊断、训练等接口，同时附带 React 前端示例。
+- **完整 API**：基于 FastAPI 提供问答、诊断、训练等接口，同时附带 Vue/Vite 前端示例。
 
-## 环境准备
+## 环境要求
+
+- Python 3.8+
+- 推荐具备 CUDA GPU（否则自动使用 CPU）
+- Node.js 16+（仅在运行前端示例时需要）
+
+## 快速开始
 
 1. **克隆项目**
+
    ```bash
    git clone https://github.com/GodCzy/Blueocean-rag.git
    cd Blueocean-rag
    ```
-2. **安装依赖**（推荐在虚拟环境中执行）
+
+2. **安装依赖**（建议使用虚拟环境）
+
    ```bash
    python -m venv venv
-   source venv/bin/activate  # Windows 下使用 venv\Scripts\activate
+   source venv/bin/activate  # Windows 使用 venv\Scripts\activate
    pip install -r requirements.txt
    ```
-3. **模型与数据**
-   - 运行 `scripts/setup_project.py` 可自动创建目录并尝试下载所需模型与数据。
-   - 如需手动下载，可执行 `python download_model.py`，或按 `docs/DEPLOYMENT_GUIDE.md` 的说明自行配置。
-4. **启动服务**
-   ```bash
-   python src/main.py
-   ```
-   默认服务地址为 `http://localhost:8000`，可通过 `http://localhost:8000/docs` 查看接口文档。
 
-更多部署与手动操作说明请参见 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) 与 [MANUAL_STEPS.md](MANUAL_STEPS.md)。
+   可执行 `python quick_start.py` 进行环境自检并自动创建常用目录。
+
+3. **下载模型与数据**
+
+   使用模型管理脚本列出和下载推荐模型：
+
+   ```bash
+   python manage_oceangpt.py list
+   python manage_oceangpt.py download OceanGPT-o-7B-v0.1
+   python manage_oceangpt.py switch OceanGPT-o-7B-v0.1
+   ```
+
+   模型和数据路径可在 `config.json` 中调整。若需一键初始化目录、模型及示例数据，可运行 `python scripts/setup_project.py`。
+
+4. **启动后端服务**
+
+   ```bash
+   python run.py --host 0.0.0.0 --port 8000
+   ```
+
+   服务启动后访问 `http://localhost:8000/docs` 查看 API 文档。
+
+5. **启动前端（可选）**
+
+   ```bash
+   cd web
+   npm install
+   npm run dev
+   ```
+
+   默认前端地址为 `http://localhost:5173`。
 
 ## 目录结构概览
 
 ```
-├── datasets/           # 样例数据集
-├── data/               # 向量库、知识图谱等运行数据
-├── models/             # OceanGPT 等模型文件
+├── data/               # 运行产生的数据（向量库、知识图谱等）
+├── datasets/           # 示例数据集
+├── models/             # 预训练模型存放目录
 ├── src/                # 后端源代码
 │   ├── api/            # 业务 API 模块
 │   ├── routers/        # FastAPI 路由
 │   ├── core/           # 核心功能实现
 │   └── ...
-├── scripts/            # 辅助脚本
-└── docs/               # 额外文档
+├── scripts/            # 辅助脚本（模型下载、项目初始化等）
+├── web/                # Vue/Vite 前端示例
+├── run.py              # 后端启动脚本
+├── quick_start.py      # 环境检查与快速启动向导
+└── manage_oceangpt.py  # OceanGPT 模型管理脚本
 ```
 
 ## 运行测试
 
-项目提供了一些基础单元测试，可通过下列命令运行：
-
 ```bash
 python -m pytest -v
 ```
-
-如测试因缺少依赖或网络限制而失败，可根据 `requirements.txt` 安装额外包，或参考文档手动配置。
 
 ## 贡献
 
