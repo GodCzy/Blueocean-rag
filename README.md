@@ -45,7 +45,7 @@
    python manage_oceangpt.py switch OceanGPT-o-7B-v0.1
    ```
 
-   模型和数据路径可在 `config.json` 中调整。若需一键初始化目录、模型及示例数据，可运行 `python scripts/setup_project.py`。
+   模型和数据路径可在 `config.json` 中调整。若需一键初始化目录、模型及示例数据，可运行 `python scripts/deployment/setup_project.py`。
 
 4. **启动后端服务**
 
@@ -76,7 +76,11 @@
 │   ├── routers/        # FastAPI 路由
 │   ├── core/           # 核心功能实现
 │   └── ...
-├── scripts/            # 辅助脚本（模型下载、项目初始化等）
+├── scripts/
+│   ├── data_collection/   # 数据抓取脚本
+│   ├── data_processing/   # 数据预处理与索引脚本
+│   ├── deployment/        # 项目部署与运行脚本
+│   └── model/             # 模型下载与管理脚本
 ├── web/                # Vue/Vite 前端示例
 ├── run.py              # 后端启动脚本
 ├── quick_start.py      # 环境检查与快速启动向导

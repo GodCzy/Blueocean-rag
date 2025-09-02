@@ -12,12 +12,15 @@ import logging
 from pathlib import Path
 from typing import Optional, Dict, Any
 
+# 定位项目根目录
+ROOT_DIR = Path(__file__).resolve().parents[2]
+
 # 设置日志
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('logs/download.log', encoding='utf-8'),
+        logging.FileHandler(ROOT_DIR / 'logs/download.log', encoding='utf-8'),
         logging.StreamHandler(sys.stdout)
     ]
 )
@@ -25,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 def load_config() -> Dict[str, Any]:
     """加载配置文件"""
-    with open('config.json', 'r', encoding='utf-8') as f:
+    with open(ROOT_DIR / 'config.json', 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def download_from_modelscope(model_id: str, local_dir: str) -> bool:
