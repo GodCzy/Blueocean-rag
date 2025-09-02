@@ -33,6 +33,7 @@ llama-index-vector-stores-faiss>=0.1.0
 # 向量数据库
 faiss-cpu>=1.7.0
 # faiss-gpu>=1.7.4  # 如果有GPU支持，取消注释
+pymilvus>=2.3.0
 
 # 知识图谱
 neo4j>=5.14.0

@@ -21,7 +21,13 @@ logger = logging.getLogger(__name__)
 
 class ProjectSetup:
     def __init__(self, project_root: str = None):
-        self.project_root = Path(project_root or os.getcwd())
+        """初始化项目设置工具.
+
+        Args:
+            project_root: 项目根目录。如果未指定，则根据脚本位置推断。
+        """
+        default_root = Path(__file__).resolve().parents[2]
+        self.project_root = Path(project_root or default_root)
         self.models_dir = self.project_root / "models"
         self.data_dir = self.project_root / "data"
         self.datasets_dir = self.project_root / "datasets"
@@ -350,7 +356,7 @@ RUN mkdir -p models data datasets logs
 EXPOSE 8000
 
 # 启动命令
-CMD ["python", "run.py"]
+CMD ["python", "scripts/deployment/run_api.py"]
 """
         
         dockerfile_path = self.project_root / "Dockerfile"
@@ -425,128 +431,9 @@ services:
             logger.info("docker-compose.yml创建完成")
     
     def create_model_management_script(self):
-        """创建模型管理脚本"""
-        logger.info("创建模型管理脚本...")
-        
-        script_content = '''#!/usr/bin/env python3
-"""
-OceanGPT模型管理脚本
-用于下载、切换和管理不同版本的OceanGPT模型
-"""
+        """提示模型管理脚本位置"""
+        logger.info("模型管理脚本已包含在 scripts/model/manage.py，跳过自动生成。")
 
-import argparse
-import json
-import sys
-from pathlib import Path
-
-def list_available_models():
-    """列出可用的模型"""
-    with open("config.json", "r", encoding="utf-8") as f:
-        config = json.load(f)
-    
-    models = config.get("oceangpt_models", {})
-    print("可用的OceanGPT模型:")
-    for key, model_info in models.items():
-        status = "推荐" if model_info.get("recommended") else "可选"
-        multimodal = "多模态" if model_info.get("supports_multimodal") else "文本"
-        print(f"  {model_info['name']} - {model_info['description']} ({multimodal}) [{status}]")
-
-def download_model(model_name, source="modelscope"):
-    """下载指定模型"""
-    from scripts.setup_project import ProjectSetup
-    
-    setup = ProjectSetup()
-    # 临时修改配置只下载指定模型
-    original_config = setup.config.copy()
-    
-    # 找到指定模型
-    target_model = None
-    for key, model_info in setup.config.get("oceangpt_models", {}).items():
-        if model_info["name"] == model_name:
-            target_model = model_info
-            break
-    
-    if not target_model:
-        print(f"未找到模型: {model_name}")
-        return False
-    
-    # 下载模型
-    print(f"下载模型: {model_name}")
-    model_path = setup.models_dir / model_name
-    
-    if source == "modelscope":
-        success = setup._download_from_modelscope(target_model["modelscope_id"], model_path)
-    else:
-        success = setup._download_from_huggingface(target_model["huggingface_id"], model_path)
-    
-    return success
-
-def switch_model(model_name):
-    """切换默认模型"""
-    with open("config.json", "r", encoding="utf-8") as f:
-        config = json.load(f)
-    
-    # 检查模型是否存在
-    models = config.get("oceangpt_models", {})
-    target_model = None
-    for key, model_info in models.items():
-        if model_info["name"] == model_name:
-            target_model = model_info
-            break
-    
-    if not target_model:
-        print(f"未找到模型: {model_name}")
-        return False
-    
-    # 更新配置
-    config["model_name"] = model_name
-    
-    with open("config.json", "w", encoding="utf-8") as f:
-        json.dump(config, f, indent=2, ensure_ascii=False)
-    
-    print(f"已切换到模型: {model_name}")
-    return True
-
-def main():
-    parser = argparse.ArgumentParser(description="OceanGPT模型管理工具")
-    subparsers = parser.add_subparsers(dest="command", help="可用命令")
-    
-    # 列出模型
-    subparsers.add_parser("list", help="列出可用模型")
-    
-    # 下载模型
-    download_parser = subparsers.add_parser("download", help="下载模型")
-    download_parser.add_argument("model_name", help="模型名称")
-    download_parser.add_argument("--source", choices=["modelscope", "huggingface"], 
-                               default="modelscope", help="下载源")
-    
-    # 切换模型
-    switch_parser = subparsers.add_parser("switch", help="切换默认模型")
-    switch_parser.add_argument("model_name", help="模型名称")
-    
-    args = parser.parse_args()
-    
-    if args.command == "list":
-        list_available_models()
-    elif args.command == "download":
-        success = download_model(args.model_name, args.source)
-        sys.exit(0 if success else 1)
-    elif args.command == "switch":
-        success = switch_model(args.model_name)
-        sys.exit(0 if success else 1)
-    else:
-        parser.print_help()
-
-if __name__ == "__main__":
-    main()
-'''
-        
-        script_path = self.project_root / "manage_models.py"
-        with open(script_path, 'w', encoding='utf-8') as f:
-            f.write(script_content)
-        script_path.chmod(0o755)
-        logger.info("模型管理脚本创建完成: manage_models.py")
-    
     def run_setup(self, skip_models=False, skip_frontend=False, skip_datasets=False, model_source="modelscope"):
         """运行完整的项目设置"""
         logger.info("开始项目初始化...")
@@ -574,9 +461,9 @@ if __name__ == "__main__":
             logger.info("下一步:")
             logger.info("1. 配置 .env 文件中的数据库连接")
             logger.info("2. 启动Neo4j数据库")
-            logger.info("3. 运行 python run.py 启动应用")
-            logger.info("4. 使用 python manage_models.py list 查看可用模型")
-            logger.info("5. 使用 python manage_models.py download <模型名> 下载其他模型")
+            logger.info("3. 运行 python scripts/deployment/run_api.py 启动应用")
+            logger.info("4. 使用 python scripts/model/manage.py list 查看可用模型")
+            logger.info("5. 使用 python scripts/model/manage.py download <模型名> 下载其他模型")
             
         except Exception as e:
             logger.error(f"项目初始化失败: {e}")

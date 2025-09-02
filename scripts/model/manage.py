@@ -13,14 +13,16 @@ import os
 from pathlib import Path
 import subprocess
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
 def load_config():
     """加载配置文件"""
-    with open("config.json", "r", encoding="utf-8") as f:
+    with open(REPO_ROOT / "config.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
 def save_config(config):
     """保存配置文件"""
-    with open("config.json", "w", encoding="utf-8") as f:
+    with open(REPO_ROOT / "config.json", "w", encoding="utf-8") as f:
         json.dump(config, f, indent=2, ensure_ascii=False)
 
 def list_available_models():
@@ -42,7 +44,7 @@ def list_available_models():
         if not features:
             features.append("📝 文本")
         
-        model_path = Path("models") / model_info["name"]
+        model_path = REPO_ROOT / "models" / model_info["name"]
         installed = "✅ 已安装" if model_path.exists() else "❌ 未安装"
         
         print(f"📦 {model_info['name']}")
@@ -63,7 +65,7 @@ def list_datasets():
     print("-" * 60)
     
     for key, dataset_info in datasets.items():
-        dataset_path = Path("datasets/ocean_instruct") / dataset_info["name"]
+        dataset_path = REPO_ROOT / "datasets" / "ocean_instruct" / dataset_info["name"]
         installed = "✅ 已下载" if dataset_path.exists() else "❌ 未下载"
         
         print(f"📊 {dataset_info['name']}")
@@ -145,10 +147,10 @@ def download_model(model_name: str, source: str = "modelscope") -> bool:
     
     if not target_model:
         print(f"❌ 未找到模型: {model_name}")
-        print("💡 使用 'python manage_oceangpt.py list' 查看可用模型")
+        print("💡 使用 'python scripts/model/manage.py list' 查看可用模型")
         return False
     
-    model_path = Path("models") / target_model["name"]
+    model_path = REPO_ROOT / "models" / target_model["name"]
     
     if model_path.exists():
         print(f"✅ 模型已存在: {target_model['name']}")
@@ -194,10 +196,10 @@ def download_dataset(dataset_name: str, source: str = "modelscope") -> bool:
     
     if not target_dataset:
         print(f"❌ 未找到数据集: {dataset_name}")
-        print("💡 使用 'python manage_oceangpt.py list-datasets' 查看可用数据集")
+        print("💡 使用 'python scripts/model/manage.py list-datasets' 查看可用数据集")
         return False
     
-    dataset_path = Path("datasets/ocean_instruct") / target_dataset["name"]
+    dataset_path = REPO_ROOT / "datasets" / "ocean_instruct" / target_dataset["name"]
     
     if dataset_path.exists():
         print(f"✅ 数据集已存在: {target_dataset['name']}")
@@ -246,10 +248,10 @@ def switch_model(model_name: str) -> bool:
         return False
     
     # 检查模型是否已下载
-    model_path = Path("models") / target_model["name"]
+    model_path = REPO_ROOT / "models" / target_model["name"]
     if not model_path.exists():
         print(f"❌ 模型未下载: {target_model['name']}")
-        print(f"💡 使用 'python manage_oceangpt.py download {model_name}' 下载模型")
+        print(f"💡 使用 'python scripts/model/manage.py download {model_name}' 下载模型")
         return False
     
     # 更新配置
@@ -305,13 +307,13 @@ def status():
             if features:
                 print(f"🔧 功能: {' | '.join(features)}")
             
-            model_path = Path("models") / current_model_info["name"]
+            model_path = REPO_ROOT / "models" / current_model_info["name"]
             status = "✅ 已安装" if model_path.exists() else "❌ 未安装"
             print(f"📍 状态: {status}")
     
     print()
     print("📊 已安装的模型:")
-    models_dir = Path("models")
+    models_dir = REPO_ROOT / "models"
     if models_dir.exists():
         installed_models = [d.name for d in models_dir.iterdir() if d.is_dir()]
         if installed_models:
@@ -328,11 +330,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例用法:
-  python manage_oceangpt.py list                          # 列出可用模型
-  python manage_oceangpt.py download OceanGPT-o-7B-v0.1  # 下载模型
-  python manage_oceangpt.py switch OceanGPT-o-7B-v0.1    # 切换模型
-  python manage_oceangpt.py status                        # 查看状态
-  python manage_oceangpt.py list-datasets                 # 列出数据集
+  python scripts/model/manage.py list                          # 列出可用模型
+  python scripts/model/manage.py download OceanGPT-o-7B-v0.1  # 下载模型
+  python scripts/model/manage.py switch OceanGPT-o-7B-v0.1    # 切换模型
+  python scripts/model/manage.py status                        # 查看状态
+  python scripts/model/manage.py list-datasets                 # 列出数据集
         """
     )
     
