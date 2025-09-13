@@ -19,11 +19,17 @@ import time
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+# Resolve project root so the script works from any location
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 class QuickStartManager:
     """快速启动管理器"""
-    
+
     def __init__(self):
-        self.project_root = Path(__file__).parent
+        # Use resolved repository root
+        self.project_root = PROJECT_ROOT
         self.errors = []
         self.warnings = []
         

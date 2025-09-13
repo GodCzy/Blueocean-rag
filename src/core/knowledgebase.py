@@ -4,7 +4,11 @@ import time
 import traceback
 import shutil
 
-from pymilvus import MilvusClient, MilvusException
+try:
+    from pymilvus import MilvusClient, MilvusException
+except Exception:  # pragma: no cover - optional dependency
+    MilvusClient = None  # type: ignore
+    MilvusException = Exception
 
 from src import get_config
 from src.utils import logger, hashstr
@@ -336,10 +340,13 @@ class KnowledgeBase:
         连接到 Milvus 服务。
         使用配置中的 URI，如果没有配置，则使用默认值。
         """
+        if MilvusClient is None:
+            logger.error("pymilvus is not installed; cannot use knowledge base")
+            return False
         try:
             uri = os.getenv('MILVUS_URI', config.get('milvus_uri', "http://milvus:19530"))
             self.client = MilvusClient(uri=uri)
-            # 可以添加一个简单的测试来确保连接成功
+            # 简单测试确保连接成功
             self.client.list_collections()
             logger.info(f"Successfully connected to Milvus at {uri}")
             return True
