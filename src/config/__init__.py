@@ -126,7 +126,10 @@ class Config(SimpleConfig):
             self.enable_web_search = False
 
         self.valuable_model_provider = [k for k, v in self.model_provider_status.items() if v]
-        assert len(self.valuable_model_provider) > 0, f"No model provider available, please check your `.env` file. API_KEY_LIST: {conds}"
+        if not self.valuable_model_provider:
+            logger.warning(
+                f"No model provider available, please check your `.env` file. API_KEY_LIST: {conds}"
+            )
 
     def load(self):
         """根据传入的文件覆盖掉默认配置"""

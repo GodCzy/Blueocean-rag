@@ -5,9 +5,7 @@ RAG API for aquatic animals disease diagnosis and QA
 import os
 from typing import List, Dict, Any, Optional
 import time
-
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
-from llama_index.vector_stores.faiss import FaissVectorStore
+import asyncio
 from llama_index.core.response_synthesizers import ResponseMode
 from llama_index.core.response_synthesizers.base import BaseSynthesizer
 from llama_index.core.llms import LLM
@@ -68,9 +66,11 @@ class RAGService:
     
     def _load_or_create_index(self):
         """加载或创建向量索引"""
+        from llama_index.vector_stores.faiss import FaissVectorStore
+        from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
         try:
             # 如果索引文件存在，则加载
-            if os.path.exists(self.index_path):
+            if os.path.isdir(self.index_path) and os.listdir(self.index_path):
                 logger.info(f"Loading existing index from {self.index_path}")
                 vector_store = FaissVectorStore.from_persist_dir(self.index_path)
                 self.index = VectorStoreIndex.from_vector_store(vector_store)
@@ -85,12 +85,13 @@ class RAGService:
                 if not os.path.exists(self.data_dir) or not os.listdir(self.data_dir):
                     logger.warning(f"No documents found in {self.data_dir}. Creating empty index.")
                     # 创建一个空索引
-                    vector_store = FaissVectorStore(dim=1536)
+                    import faiss
+                    vector_store = FaissVectorStore(faiss.IndexFlatL2(1536))
                     self.index = VectorStoreIndex.from_documents(
                         [],
                         vector_store=vector_store,
                     )
-                    vector_store.persist(persist_dir=self.index_path)
+                    vector_store.persist(persist_path=self.index_path)
                     return
                 
                 # 加载文档
@@ -100,7 +101,8 @@ class RAGService:
                 ).load_data()
                 
                 # 创建向量存储
-                vector_store = FaissVectorStore(dim=1536)  # 根据具体的嵌入模型维度设置
+                import faiss
+                vector_store = FaissVectorStore(faiss.IndexFlatL2(1536))  # 根据具体的嵌入模型维度设置
                 
                 # 创建索引
                 if self.oceangpt_manager:
@@ -111,7 +113,7 @@ class RAGService:
                 )
                 
                 # 持久化索引
-                vector_store.persist(persist_dir=self.index_path)
+                vector_store.persist(persist_path=self.index_path)
                 
             logger.info("Index loaded successfully")
         except Exception as e:
@@ -163,8 +165,11 @@ class RAGService:
                 source_texts = [node.node.text for node in retrieved_nodes]
                 context = "\n\n".join(source_texts[:3])  # 使用前3个最相关的文档作为上下文
             
-            # 生成回答
-            answer = ""
+            # 使用检索到的索引生成回答
+            query_engine = self.index.as_query_engine(response_mode=response_mode)
+            response = query_engine.query(query)
+            answer = getattr(response, "response", str(response))
+
             if self.oceangpt_manager and self.oceangpt_manager.model:
                 # 使用OceanGPT生成回答
                 try:
@@ -176,17 +181,11 @@ class RAGService:
 用户问题：{query}
 
 请提供专业、准确、详细的回答："""
-                    
+
                     answer = await self.oceangpt_manager.generate_response(prompt)
                 except Exception as e:
                     logger.error(f"OceanGPT生成回答失败: {e}")
-                    answer = f"OceanGPT生成回答时出现错误，但找到了相关文档。请查看检索结果。"
-            else:
-                # 如果OceanGPT不可用，返回检索结果
-                if source_texts:
-                    answer = f"找到相关信息：\n\n{context}"
-                else:
-                    answer = "抱歉，没有找到相关信息。"
+                    answer = getattr(response, "response", str(response))
             
             elapsed_time = time.time() - start_time
             
@@ -231,7 +230,9 @@ class RAGService:
             query += f"出现以下症状: {', '.join(symptoms)}。这可能是什么疾病？给出详细诊断和处理建议。"
             
             # 使用RAG执行诊断
-            result = await self.ask(query, response_mode="tree_summarize")
+            result = self.ask(query, response_mode="tree_summarize")
+            if asyncio.iscoroutine(result):
+                result = await result
             
             # 添加诊断特定字段
             result["symptoms"] = symptoms

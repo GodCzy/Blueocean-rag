@@ -33,16 +33,16 @@
    pip install -r requirements.txt
    ```
 
-   可执行 `python quick_start.py` 进行环境自检并自动创建常用目录。
+   可执行 `python scripts/deployment/quick_start.py` 进行环境自检并自动创建常用目录。
 
 3. **下载模型与数据**
 
    使用模型管理脚本列出和下载推荐模型：
 
    ```bash
-   python manage_oceangpt.py list
-   python manage_oceangpt.py download OceanGPT-o-7B-v0.1
-   python manage_oceangpt.py switch OceanGPT-o-7B-v0.1
+   python scripts/model/manage_oceangpt.py list
+   python scripts/model/manage_oceangpt.py download OceanGPT-o-7B-v0.1
+   python scripts/model/manage_oceangpt.py switch OceanGPT-o-7B-v0.1
    ```
 
    模型和数据路径可在 `config.json` 中调整。若需一键初始化目录、模型及示例数据，可运行 `python scripts/deployment/setup_project.py`。
@@ -50,7 +50,7 @@
 4. **启动后端服务**
 
    ```bash
-   python run.py --host 0.0.0.0 --port 8000
+   python scripts/deployment/run.py --host 0.0.0.0 --port 8000
    ```
 
    服务启动后访问 `http://localhost:8000/docs` 查看 API 文档。
@@ -79,12 +79,9 @@
 ├── scripts/
 │   ├── data_collection/   # 数据抓取脚本
 │   ├── data_processing/   # 数据预处理与索引脚本
-│   ├── deployment/        # 项目部署与运行脚本
-│   └── model/             # 模型下载与管理脚本
+│   ├── deployment/        # 部署与运行脚本（run.py、quick_start.py 等）
+│   └── model/             # 模型下载与管理脚本（manage_oceangpt.py 等）
 ├── web/                # Vue/Vite 前端示例
-├── run.py              # 后端启动脚本
-├── quick_start.py      # 环境检查与快速启动向导
-└── manage_oceangpt.py  # OceanGPT 模型管理脚本
 ```
 
 ## 运行测试

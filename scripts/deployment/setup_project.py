@@ -356,7 +356,7 @@ RUN mkdir -p models data datasets logs
 EXPOSE 8000
 
 # 启动命令
-CMD ["python", "run.py"]
+CMD ["python", "scripts/deployment/run.py"]
 """
         
         dockerfile_path = self.project_root / "Dockerfile"
@@ -580,7 +580,7 @@ if __name__ == "__main__":
             logger.info("下一步:")
             logger.info("1. 配置 .env 文件中的数据库连接")
             logger.info("2. 启动Neo4j数据库")
-            logger.info("3. 运行 python run.py 启动应用")
+            logger.info("3. 运行 python scripts/deployment/run.py 启动应用")
             logger.info("4. 使用 python manage_models.py list 查看可用模型")
             logger.info("5. 使用 python manage_models.py download <模型名> 下载其他模型")
             
