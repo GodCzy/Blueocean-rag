@@ -1,7 +1,9 @@
 import os
 
-from src.utils.logging_config import logger
 from src.models.chat_model import OpenAIBase
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def select_model(config, model_provider=None, model_name=None):

@@ -2,7 +2,10 @@ import os
 import json
 import yaml
 from pathlib import Path
-from src.utils.logging_config import logger
+
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 with open(Path("src/static/models.yaml"), 'r', encoding='utf-8') as f:
     _models = yaml.safe_load(f)

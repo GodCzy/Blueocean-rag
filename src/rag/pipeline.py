@@ -10,7 +10,9 @@ import numpy as np
 
 from src.rag.embedder import Embedder
 from src.rag.vector_store import FAISSVectorStore
-from src.utils.logging_config import logger
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class RAGPipeline:

@@ -8,7 +8,9 @@ from fastapi import APIRouter, HTTPException, Query, Body, Depends
 from pydantic import BaseModel, Field
 
 from src.api.rag_api import get_rag_service, RAGService
-from src.utils.logging_config import logger
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 # 请求和响应模型

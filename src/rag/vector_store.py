@@ -9,7 +9,9 @@ import pickle
 import json
 import time
 
-from src.utils.logging_config import logger
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class FAISSVectorStore:
