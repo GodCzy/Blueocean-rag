@@ -31,6 +31,13 @@ class KnowledgeBase:
         self.default_rerank_threshold = 0.1
         self.default_max_query_count = 20
 
+        # Models are loaded lazily depending on the feature flag.  When the
+        # knowledge base is disabled we keep these attributes defined so that
+        # later accesses don't raise ``AttributeError`` but can perform their
+        # own guard checks.
+        self.embed_model = None
+        self.reranker = None
+
         self._load_models()
         self._load_databases()
 
@@ -75,6 +82,12 @@ class KnowledgeBase:
 
     def create_database(self, database_name, description, dimension=None):
         """创建一个数据库"""
+        if not config.enable_knowledge_base:
+            raise RuntimeError("知识库未启用")
+
+        if self.embed_model is None:
+            raise RuntimeError("Embedding 模型尚未初始化")
+
         dimension = dimension or self.embed_model.get_dimension()
         db = DataBaseLite(database_name,
                           description,
@@ -102,7 +115,8 @@ class KnowledgeBase:
         return uploads_folder
 
     def get_databases(self):
-        assert config.enable_knowledge_base, "知识库未启用"
+        if not config.enable_knowledge_base:
+            return {"message": "知识库未启用", "databases": []}
 
         for db in self.data:
             db.update(self.get_collection_info(db.db_id))
