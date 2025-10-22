@@ -88,7 +88,15 @@ docker/volumes/
 # ==========================
 # 🗃️ 数据文件
 # ==========================
-/data/vector_store/
-/data/knowledge_graph/
+/data/*
 !/data/.gitkeep
+!/data/README.md
+!/data/*/
+!/data/*/.gitkeep
 !/data/*/README.md
+/datasets/*
+!/datasets/.gitkeep
+!/datasets/README.md
+!/datasets/*/
+!/datasets/*/.gitkeep
+!/datasets/*/README.md

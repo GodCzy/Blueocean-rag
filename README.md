@@ -31,17 +31,18 @@
    cd Blueocean-rag
    ```
 
-2. **安装依赖**（建议使用虚拟环境）
+2. **安装依赖并配置环境变量**（建议使用虚拟环境）
 
    ```bash
    python -m venv venv
    source venv/bin/activate  # Windows 使用 venv\Scripts\activate
    pip install -r requirements.txt
+   cp .env.template .env
    ```
 
-   可执行 `python scripts/deployment/quick_start.py` 进行环境自检并自动创建常用目录。
+   根据部署需求编辑项目根目录的 `.env` 文件，可执行 `python scripts/deployment/quick_start.py` 进行环境自检并自动创建常用目录。
 
-3. **下载模型与数据**
+3. **准备模型与数据（需自备数据集）**
 
    使用模型管理脚本列出和下载推荐模型：
 
@@ -51,7 +52,7 @@
    python scripts/model/manage_oceangpt.py switch OceanGPT-o-7B-v0.1
    ```
 
-   模型和数据路径可在 `config.json` 中调整。若需一键初始化目录、模型及示例数据，可运行 `python scripts/deployment/setup_project.py`。
+   模型和数据路径可在 `config.json` 中调整。请将自备文档放入 `datasets/` 目录（仓库默认不包含任何示例数据），并根据需要运行 `scripts/data_processing/` 下的脚本构建索引。
 
 4. **启动后端服务**
 
@@ -75,7 +76,7 @@
 
 ```
 ├── data/               # 运行产生的数据（向量库、知识图谱等）
-├── datasets/           # 示例数据集
+├── datasets/           # 用户自备的数据集占位目录
 ├── models/             # 预训练模型存放目录
 ├── src/                # 后端源代码
 │   ├── services/       # 业务服务层（RAG、OceanGPT 等核心逻辑）
@@ -96,6 +97,10 @@
 ```bash
 python -m pytest -v
 ```
+
+## 项目说明书
+
+详细的架构、部署与排障信息请参考 [docs/PROJECT_MANUAL.md](docs/PROJECT_MANUAL.md)。
 
 ## 贡献
 
