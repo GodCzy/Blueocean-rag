@@ -7,12 +7,13 @@ from fastapi.responses import StreamingResponse, Response
 # 聊天相关接口
 from src.core import HistoryManager
 from src import get_executor, get_config, get_retriever
+from src.models import select_model
+from src.utils.logger import get_logger
 
 executor = get_executor()
 config = get_config()
 retriever = get_retriever()
-from src.models import select_model
-from src.utils.logging_config import logger
+logger = get_logger(__name__)
 
 chat = APIRouter(prefix="/chat")
 

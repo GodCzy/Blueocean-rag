@@ -1,7 +1,11 @@
+from typing import List
+
 from src import get_config, get_knowledge_base, get_graph_base
-from src.models.rerank_model import get_reranker
-from src.utils.logging_config import logger
 from src.models import select_model
+from src.models.rerank_model import get_reranker
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 config = get_config()
 knowledge_base = get_knowledge_base()
@@ -21,8 +25,10 @@ class Retriever:
             self.web_searcher = WebSearcher()
 
     def retrieval(self, query, history, meta):
+        meta = meta or {}
         refs = {"query": query, "history": history, "meta": meta}
         refs["model_name"] = config.model_name
+        refs["rewritten_query"] = self.rewrite_query(query, history, refs)
         refs["entities"] = self.reco_entities(query, history, refs)
         refs["knowledge_base"] = self.query_knowledgebase(query, history, refs)
         refs["graph_base"] = self.query_graph(query, history, refs)
@@ -78,7 +84,7 @@ class Retriever:
 
     def query_graph(self, query, history, refs):
         results = []
-        if refs["meta"].get("use_graph") and config.enable_knowledge_base:
+        if refs["meta"].get("use_graph") and config.enable_knowledge_graph:
             for entity in refs["entities"]:
                 result = graph_base.query_by_vector(entity)
                 if result != []:
@@ -103,7 +109,8 @@ class Retriever:
             response["message"] = "知识库未启用、或未指定知识库、或知识库不存在"
             return response
 
-        rw_query = self.rewrite_query(query, history, refs)
+        rw_query = refs.get("rewritten_query") or self.rewrite_query(query, history, refs)
+        refs["rewritten_query"] = rw_query
 
         logger.debug(f"{meta=}")
         query_result = knowledge_base.query(query=rw_query,
@@ -167,14 +174,41 @@ class Retriever:
 
         entities = []
         if refs["meta"].get("use_graph"):
-            from src.utils.prompts import entity_extraction_prompt_template as entity_template
-            from src.utils.prompts import keywords_prompt_template as entity_template
+            from src.utils.prompts import (
+                entity_extraction_prompt_template,
+                keywords_prompt_template,
+            )
 
-            entity_extraction_prompt = entity_template.format(text=query)
-            entities = model.predict(entity_extraction_prompt).content.split("<->")
-            # entities = [entity for entity in entities if all(char.isalnum() or char in "汉字" for char in entity)]
+            try:
+                entity_prompt = entity_extraction_prompt_template.format(text=query)
+                entity_response = model.predict(entity_prompt).content or ""
+                entities.extend([
+                    item.strip()
+                    for item in entity_response.split(",")
+                    if item.strip()
+                ])
+            except Exception as exc:  # pragma: no cover - 依赖外部模型
+                logger.warning("Entity extraction failed: %s", exc)
 
-        return entities
+            try:
+                keyword_prompt = keywords_prompt_template.format(text=query)
+                keyword_response = model.predict(keyword_prompt).content or ""
+                entities.extend([
+                    item.strip()
+                    for item in keyword_response.split("<->")
+                    if item.strip()
+                ])
+            except Exception as exc:  # pragma: no cover - 依赖外部模型
+                logger.warning("Keyword extraction failed: %s", exc)
+
+        unique_entities: List[str] = []
+        seen = set()
+        for entity in entities:
+            if entity not in seen:
+                seen.add(entity)
+                unique_entities.append(entity)
+
+        return unique_entities
 
     def _extract_relationship_info(self, relationship, source_name=None, target_name=None, node_dict=None):
         """

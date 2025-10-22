@@ -25,7 +25,9 @@ try:
 except ImportError:
     HAVE_OPENAI = False
 
-from src.utils.logging_config import logger
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class Embedder:

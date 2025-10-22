@@ -1,41 +1,54 @@
-import time
-import random
 import os
-from src.utils.logging_config import logger
+import random
+import time
 
-def is_text_pdf(pdf_path):
+from .logger import get_logger
+
+logger = get_logger(__name__)
+
+
+def is_text_pdf(pdf_path: str) -> bool:
     import fitz
+
     doc = fitz.open(pdf_path)
     total_pages = len(doc)
     if total_pages == 0:
         return False
-        
+
     text_pages = 0
     for page_num in range(total_pages):
         page = doc.load_page(page_num)
         text = page.get_text()
-        if text.strip():  # 检查是否有文本内容
+        if text.strip():
             text_pages += 1
-    
-    # 计算有文本内容的页面比例
+
     text_ratio = text_pages / total_pages
-    # 如果超过50%的页面有文本内容，则认为是文本PDF
     return text_ratio > 0.5
 
-def hashstr(input_string, length=8, with_salt=False):
+
+def hashstr(input_string: str, length: int = 8, with_salt: bool = False) -> str:
     import hashlib
-    # 添加时间戳作为干扰
+
     if with_salt:
         input_string += str(time.time() + random.random())
 
-    hash = hashlib.md5(str(input_string).encode()).hexdigest()
-    return hash[:length]
+    digest = hashlib.md5(str(input_string).encode()).hexdigest()
+    return digest[:length]
 
 
-def get_docker_safe_url(base_url):
+def get_docker_safe_url(base_url: str) -> str:
     if os.getenv("RUNNING_IN_DOCKER") == "true":
-        # 替换所有可能的本地地址形式
-        base_url = base_url.replace("http://localhost", "http://host.docker.internal")
-        base_url = base_url.replace("http://127.0.0.1", "http://host.docker.internal")
-        logger.info(f"Running in docker, using {base_url} as base url")
+        safe_url = base_url.replace("http://localhost", "http://host.docker.internal")
+        safe_url = safe_url.replace("http://127.0.0.1", "http://host.docker.internal")
+        logger.info("Running in docker, using %s as base url", safe_url)
+        return safe_url
     return base_url
+
+
+__all__ = [
+    "get_logger",
+    "logger",
+    "hashstr",
+    "is_text_pdf",
+    "get_docker_safe_url",
+]

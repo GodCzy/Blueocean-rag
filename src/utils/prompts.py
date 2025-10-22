@@ -13,7 +13,7 @@ knowbase_qa_template = """
 
 <问题>
 {query}
-</问题>"
+</问题>
 """
 
 rewritten_query_prompt_template = """
