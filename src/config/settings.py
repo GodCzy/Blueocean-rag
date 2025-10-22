@@ -104,4 +104,4 @@ def get_settings() -> Settings:
     """
     settings = Settings()
     settings.create_directories()
-    return settings 
+    return settings

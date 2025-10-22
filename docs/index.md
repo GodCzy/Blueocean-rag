@@ -38,7 +38,7 @@ permalink: /
 
 ### 环境配置
 
-在启动前，您需要提供 API 服务商的 API_KEY，并放置在 `src/.env` 文件中（此文件项目中没有，需要自行参考 [src/.env.template](src/.env.template) 创建）。
+在启动前，您需要提供 API 服务商的 API_KEY，并放置在项目根目录的 `.env` 文件中（可参考根目录的 [.env.template](../.env.template) 创建）。
 
 默认使用硅基流动的服务，因此**必须**配置：
 
@@ -54,7 +54,7 @@ ZHIPUAI_API_KEY=<API_KEY>  # 如果配置 智谱清言 添加此行，并替换 
 **开发环境启动**（源代码修改会自动更新）：
 
 ```bash
-docker compose -f docker/docker-compose.dev.yml --env-file src/.env up --build
+docker compose -f docker/docker-compose.dev.yml --env-file .env up --build
 ```
 
 > 添加 `-d` 参数可在后台运行
@@ -62,7 +62,7 @@ docker compose -f docker/docker-compose.dev.yml --env-file src/.env up --build
 **生产环境部署**请使用：
 
 ```bash
-docker compose -f docker/docker-compose.yml --env-file src/.env up --build -d
+docker compose -f docker/docker-compose.yml --env-file .env up --build -d
 ```
 
 成功启动后，访问 [http://localhost:5173/](http://localhost:5173/) 即可使用系统。

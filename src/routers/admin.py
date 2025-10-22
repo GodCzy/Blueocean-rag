@@ -20,10 +20,10 @@ from fastapi import APIRouter, HTTPException, Depends, Query, UploadFile, File, 
 from pydantic import BaseModel, Field
 
 from src.config.settings import Settings, get_settings
-from src.utils.logger import setup_logger
+from src.utils.logger import get_logger
 
 # 配置日志
-logger = setup_logger("admin_router")
+logger = get_logger(__name__)
 
 # 创建路由器
 router = APIRouter()

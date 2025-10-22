@@ -18,10 +18,10 @@ from fastapi import APIRouter, Depends, HTTPException, Body, BackgroundTasks
 from pydantic import BaseModel, validator, root_validator
 
 from src.config.settings import Settings, get_settings
-from src.utils.logger import setup_logger
+from src.utils.logger import get_logger
 
 # 配置日志
-logger = setup_logger("config_api")
+logger = get_logger(__name__)
 
 # 创建路由器
 router = APIRouter(prefix="/config", tags=["配置接口"])

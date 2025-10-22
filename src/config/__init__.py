@@ -58,7 +58,7 @@ class Config(SimpleConfig):
         self.add_item("enable_web_search", default=False, des="是否开启网页搜索（需配置 TAVILY_API_KEY）")
         # 模型配置
         ## 注意这里是模型名，而不是具体的模型路径，默认使用 HuggingFace 的路径
-        ## 如果需要自定义本地模型路径，则在 src/.env 中配置 MODEL_DIR
+        ## 如果需要自定义本地模型路径，则在项目根目录 `.env` 中配置 MODEL_DIR
         self.add_item("model_provider", default="siliconflow", des="模型提供商", choices=list(MODEL_NAMES.keys()))
         self.add_item("model_provider_lite", default="siliconflow", des="模型提供商（用于轻量任务）", choices=list(MODEL_NAMES.keys()))
         self.add_item("model_name", default="Qwen/Qwen2.5-7B-Instruct", des="模型名称")

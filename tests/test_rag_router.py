@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from fastapi import FastAPI
 
 from src.routers.rag_router import rag, AskRequest, DiagnoseRequest
-from src.api.rag_api import RAGService
+from src.services.rag import RAGService
 
 
 class TestRAGRouter(unittest.TestCase):
