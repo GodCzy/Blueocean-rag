@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from src.routers.chat_router import chat
+from src.routers.chat_router import router as chat
 from src.routers.data_router import data
 from src.routers.base_router import base
 from src.routers.tool_router import tool

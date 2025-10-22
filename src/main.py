@@ -40,8 +40,8 @@ from src.routers.ocean_env import router as ocean_env_router
 from src.routers.admin import router as admin_router
 from src.api.config_api import router as config_router
 from src.routers.chat_router import router as chat_router
-from src.routers.data_router import router as data_router
-from src.routers.tool_router import router as tool_router
+from src.routers.data_router import data as data_router
+from src.routers.tool_router import tool as tool_router
 from src.routers.training import router as training_router
 from src.routers.stats import router as stats_router
 from src.auth import api_key_auth
@@ -212,13 +212,13 @@ def create_app(settings: Settings = Depends(get_settings)) -> FastAPI:
     # 注册路由
     app.include_router(
         rag_router,
-        prefix=f"{settings.api_prefix}/rag",
+        prefix=settings.api_prefix,
         tags=["知识检索服务"]
     )
     
     app.include_router(
         diagnosis_router,
-        prefix=f"{settings.api_prefix}/diagnosis",
+        prefix=settings.api_prefix,
         tags=["疾病诊断服务"]
     )
     
@@ -242,19 +242,19 @@ def create_app(settings: Settings = Depends(get_settings)) -> FastAPI:
     
     app.include_router(
         chat_router,
-        prefix=f"{settings.api_prefix}/chat",
+        prefix=settings.api_prefix,
         tags=["聊天服务"]
     )
-    
+
     app.include_router(
         data_router,
-        prefix=f"{settings.api_prefix}/data",
+        prefix=settings.api_prefix,
         tags=["数据服务"]
     )
-    
+
     app.include_router(
         tool_router,
-        prefix=f"{settings.api_prefix}/tool",
+        prefix=settings.api_prefix,
         tags=["工具服务"]
     )
     
