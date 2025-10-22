@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     ocean_data_dir: str = Field(default="")
     tags_file: str = Field(default="")
     log_dir: str = Field(default="")
+    model_dir: str = Field(default="", env="MODEL_DIR")
     
     # API 相关配置
     allowed_origins: List[str] = Field(default=["*"])
@@ -81,6 +82,8 @@ class Settings(BaseSettings):
             self.tags_file = os.path.join(self.data_dir, "tags.json")
         if not self.log_dir:
             self.log_dir = os.path.join(self.base_dir, "logs")
+        if not self.model_dir:
+            self.model_dir = os.path.join(self.base_dir, "models")
     
     def create_directories(self):
         """创建必要的目录"""
@@ -89,7 +92,8 @@ class Settings(BaseSettings):
             self.fish_docs_dir,
             self.processed_dir,
             self.ocean_data_dir,
-            self.log_dir
+            self.log_dir,
+            self.model_dir,
         ]
         
         for directory in directories:
