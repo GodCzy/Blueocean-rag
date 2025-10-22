@@ -28,7 +28,9 @@ def check_dependencies():
     """检查项目依赖是否已安装"""
     missing = []
     for pkg in ("fastapi", "uvicorn"):
-        if importlib.util.find_spec(pkg) is None:
+        try:
+            importlib.import_module(pkg)
+        except ModuleNotFoundError:
             missing.append(pkg)
     if missing:
         print("未检测到必要的依赖，正在安装...")
