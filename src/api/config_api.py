@@ -15,7 +15,7 @@ import asyncio
 import sys # 导入 sys 模块
 from typing import Dict, Any, Optional, List
 from fastapi import APIRouter, Depends, HTTPException, Body, BackgroundTasks
-from pydantic import BaseModel, validator, root_validator
+from pydantic import BaseModel, field_validator, model_validator
 
 from src.config.settings import Settings, get_settings
 from src.utils.logger import get_logger
@@ -127,14 +127,14 @@ class CustomModel(BaseModel):
     name: str
     api_base: str
     api_key: Optional[str] = ""
-    
-    @validator('name')
+
+    @field_validator('name')
     def validate_name(cls, v):
         if not v or len(v.strip()) == 0:
             raise ValueError("模型名称不能为空")
         return v
-        
-    @validator('api_base')
+
+    @field_validator('api_base')
     def validate_api_base(cls, v):
         if not v or len(v.strip()) == 0:
             raise ValueError("API地址不能为空")
@@ -144,24 +144,24 @@ class CustomModel(BaseModel):
 class ConfigUpdateRequest(BaseModel):
     key: str
     value: Any
-    
-    @validator('key')
+
+    @field_validator('key')
     def validate_key(cls, v):
         allowed_keys = list(DEFAULT_CONFIG.keys()) + ["custom_models"]
         if v not in allowed_keys and not v.startswith('_'):
             raise ValueError(f"无效的配置键: {v}")
         return v
-    
-    @root_validator
+
+    @model_validator(mode="before")
     def validate_config(cls, values):
         key = values.get('key')
         value = values.get('value')
-        
+
         # 配置项特定验证
         if key == 'enable_knowledge_graph' and value is True:
             if not DEFAULT_CONFIG.get('enable_knowledge_base', False):
                 raise ValueError("启用知识图谱前必须先启用知识库")
-        
+
         elif key == 'custom_models' and isinstance(value, list):
             # 验证自定义模型列表
             try:
@@ -171,7 +171,7 @@ class ConfigUpdateRequest(BaseModel):
                     raise ValueError("自定义模型列表不能为空")
             except Exception as e:
                 raise ValueError(f"自定义模型格式无效: {str(e)}")
-        
+
         return values
 
 # 读取配置文件
