@@ -15,15 +15,15 @@ config = get_config()
 retriever = get_retriever()
 logger = get_logger(__name__)
 
-chat = APIRouter(prefix="/chat")
+router = APIRouter(prefix="/chat")
 
 
 
-@chat.get("/")
+@router.get("/")
 async def chat_get():
     return "Chat Get!"
 
-@chat.post("/")
+@router.post("/")
 def chat_post(
         query: str = Body(...),
         meta: dict = Body(None),
@@ -99,7 +99,7 @@ def chat_post(
 
     return StreamingResponse(generate_response(), media_type='application/json')
 
-@chat.post("/call")
+@router.post("/call")
 async def call(query: str = Body(...), meta: dict = Body(None)):
     model = select_model(config, model_provider=meta.get("model_provider"), model_name=meta.get("model_name"))
     async def predict_async(query):
@@ -111,7 +111,7 @@ async def call(query: str = Body(...), meta: dict = Body(None)):
 
     return {"response": response.content}
 
-@chat.post("/call_lite")
+@router.post("/call_lite")
 async def call(query: str = Body(...), meta: dict = Body(None)):
     meta = meta or {}
     async def predict_async(query):
