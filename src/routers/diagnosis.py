@@ -24,7 +24,7 @@ from ..utils.logger import get_logger
 logger = get_logger(__name__)
 
 # 创建路由器
-router = APIRouter(prefix="/api/diagnosis", tags=["疾病诊断"])
+router = APIRouter(prefix="/diagnosis", tags=["疾病诊断"])
 
 # 请求模型
 class SymptomInput(BaseModel):
