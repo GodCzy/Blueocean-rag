@@ -345,6 +345,17 @@ class GraphDatabase:
                 "unindexed_node_count": self.query_nodes_without_embedding(graph_name)
             }
 
+        graph_info = {
+            "graph_name": graph_name,
+            "entity_count": 0,
+            "relationship_count": 0,
+            "triples_count": 0,
+            "labels": [],
+            "status": self.status,
+            "embed_model_name": self.embed_model_name,
+            "unindexed_node_count": 0,
+        }
+
         try:
             if self.status == "open" and self.driver and self.is_running():
                 # 获取数据库信息
