@@ -78,10 +78,11 @@
 ├── datasets/           # 示例数据集
 ├── models/             # 预训练模型存放目录
 ├── src/                # 后端源代码
-│   ├── api/            # 业务 API 模块
-│   ├── routers/        # FastAPI 路由
-│   ├── core/           # 核心功能实现
-│   └── ...
+│   ├── services/       # 业务服务层（RAG、OceanGPT 等核心逻辑）
+│   ├── routers/        # FastAPI 路由定义
+│   ├── api/            # 兼容性包装 & 组合式 API
+│   ├── core/           # 检索、知识图谱、模型管理等核心模块
+│   └── utils/          # 通用工具与日志组件
 ├── scripts/
 │   ├── data_collection/   # 数据抓取脚本
 │   ├── data_processing/   # 数据预处理与索引脚本

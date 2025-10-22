@@ -9,7 +9,7 @@ import tempfile
 import asyncio
 from unittest.mock import patch, MagicMock
 
-from src.api.rag_api import RAGService, get_rag_service
+from src.services.rag import RAGService, get_rag_service
 
 
 class TestRAGService(unittest.TestCase):

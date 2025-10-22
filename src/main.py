@@ -32,7 +32,7 @@ sys.path.append(project_root)
 
 # 项目内部导入
 from src.config.settings import Settings, get_settings
-from src.utils.logger import setup_logger
+from src.utils.logger import get_logger
 from src.core.oceangpt_manager import OceanGPTManager, ModelConfig
 from src.routers.rag_router import router as rag_router
 from src.routers.diagnosis import router as diagnosis_router
@@ -47,7 +47,7 @@ from src.routers.stats import router as stats_router
 from src.auth import api_key_auth
 
 # 配置日志
-logger = setup_logger("main")
+logger = get_logger(__name__)
 
 # 全局变量存储管理器实例
 oceangpt_manager = None

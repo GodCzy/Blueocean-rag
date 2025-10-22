@@ -8,10 +8,11 @@ now done lazily via accessor functions.  Modules should use the provided
 ``get_*`` helpers instead of importing the objects directly.
 """
 
+from pathlib import Path
 from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor
 
-load_dotenv("src/.env")
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 _executor = None
 _config = None

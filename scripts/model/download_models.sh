@@ -4,7 +4,12 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-source "$PROJECT_ROOT/src/.env"
+# Load shared environment configuration if present.
+ENV_FILE="$PROJECT_ROOT/.env"
+if [ -f "$ENV_FILE" ]; then
+  # shellcheck disable=SC1090
+  . "$ENV_FILE"
+fi
 
 # OCR 模型
 huggingface-cli download SWHL/RapidOCR --local-dir "${MODEL_DIR}/SWHL/RapidOCR"

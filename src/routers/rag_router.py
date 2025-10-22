@@ -2,12 +2,12 @@
 RAG Router - 为RAG检索增强问答和疾病诊断提供API路由
 """
 from typing import List, Optional, Dict, Any
-from fastapi import APIRouter, HTTPException, Query, Body, Depends
+from fastapi import APIRouter, HTTPException, Query, Depends
 
 # 目前仅含少量示例接口
 from pydantic import BaseModel, Field
 
-from src.api.rag_api import get_rag_service, RAGService
+from src.services.rag import get_rag_service, RAGService
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)

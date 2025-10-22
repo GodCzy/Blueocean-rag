@@ -170,7 +170,7 @@
       </div>
       <div class="setting" v-if="state.windowWidth <= 520 || state.section === 'model'">
         <h3>模型配置</h3>
-        <p>请在 <code>src/.env</code> 文件中配置对应的 APIKEY</p>
+        <p>请在项目根目录的 <code>.env</code> 文件中配置对应的 APIKEY</p>
         <div class="model-provider-card">
           <div class="card-header">
             <h3>自定义模型</h3>

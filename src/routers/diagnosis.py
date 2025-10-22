@@ -13,16 +13,15 @@ from fastapi import APIRouter, HTTPException, Query, Body, Depends
 from pydantic import BaseModel, Field
 import asyncio
 
-from src.api.rag_service import RAGService
 from src.models.index_model import DiagnosisRequest, DiagnosisResponse
-from src.utils.logger import setup_logger
+from src.utils.logger import get_logger
 from ..core.knowledge_graph import DiseaseKnowledgeGraph
 from ..core.oceangpt_manager import MarineDiseaseGPT
 from ..rag.rag_engine import RAGEngine
 from ..utils.logger import get_logger
 
 # 配置日志
-logger = setup_logger("diagnosis_router")
+logger = get_logger(__name__)
 
 # 创建路由器
 router = APIRouter(prefix="/api/diagnosis", tags=["疾病诊断"])

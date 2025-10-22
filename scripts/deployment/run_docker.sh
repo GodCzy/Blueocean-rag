@@ -12,4 +12,4 @@ if [ $# -eq 0 ]; then
 fi
 
 # 将所有命令行参数传递给 docker compose 命令
-docker compose -f "$PROJECT_ROOT/docker/docker-compose.dev.yml" --env-file "$PROJECT_ROOT/src/.env" "$@"
+docker compose -f "$PROJECT_ROOT/docker/docker-compose.dev.yml" --env-file "$PROJECT_ROOT/.env" "$@"
