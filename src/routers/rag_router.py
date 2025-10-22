@@ -44,11 +44,14 @@ class DiagnoseResponse(BaseModel):
 
 
 # 创建路由器
-rag = APIRouter(
+router = APIRouter(
     prefix="/rag",
     tags=["RAG检索增强问答"],
     responses={404: {"description": "Not found"}},
 )
+
+# 兼容旧名称引用
+rag = router
 
 
 # 依赖函数，获取RAG服务实例
@@ -56,7 +59,7 @@ def get_rag():
     return get_rag_service()
 
 
-@rag.post("/ask", response_model=AskResponse, summary="通用知识问答")
+@router.post("/ask", response_model=AskResponse, summary="通用知识问答")
 async def ask(
     request: AskRequest,
     rag_service: RAGService = Depends(get_rag)
@@ -78,7 +81,7 @@ async def ask(
         raise HTTPException(status_code=500, detail=f"问答处理失败: {str(e)}")
 
 
-@rag.post("/disease/diagnose", response_model=DiagnoseResponse, summary="水生动物疾病诊断")
+@router.post("/disease/diagnose", response_model=DiagnoseResponse, summary="水生动物疾病诊断")
 async def diagnose(
     request: DiagnoseRequest,
     rag_service: RAGService = Depends(get_rag)
@@ -100,7 +103,7 @@ async def diagnose(
         raise HTTPException(status_code=500, detail=f"诊断处理失败: {str(e)}")
 
 
-@rag.post("/rebuild", summary="重建知识库索引")
+@router.post("/rebuild", summary="重建知识库索引")
 async def rebuild_index(
     rag_service: RAGService = Depends(get_rag)
 ):
